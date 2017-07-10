@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,29 +9,45 @@ namespace ECommerce.Core.Data
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : Entity
     {
+        private ECommerceContext _context;
+
+        public GenericRepository(ECommerceContext context)
+        {
+            _context = context;
+        }
+
+        private IDbSet<T> DbSet
+        {
+            get
+            {
+                return _context.Set<T>();
+            }
+        }
+
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            DbSet.Add(item);
         }
 
         public void Delete(T item)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(item);
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return DbSet.AsQueryable();
         }
 
         public T GetById(Guid Id)
         {
-            throw new NotImplementedException();
+            return DbSet.Find(Id);
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            DbSet.Attach(item);
+            _context.Entry(item).State = EntityState.Modified;
         }
     }
 }

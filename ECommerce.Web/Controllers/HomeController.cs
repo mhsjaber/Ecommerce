@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ECommerce.Core;
+using ECommerce.Core.Member;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,11 @@ namespace ECommerce.Web.Controllers
     {
         public ActionResult Index()
         {
+            var unit = new ECommerceUnitOfWork(new ECommerceContext());
+            var customer = new Customer();
+            customer.FullName = "Jaber Kibria";
+            unit.CustomerRepository.Add(customer);
+            unit.Save();
             return View();
         }
 

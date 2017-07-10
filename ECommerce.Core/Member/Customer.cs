@@ -9,6 +9,6 @@ namespace ECommerce.Core.Member
 {
     public class Customer : Entity
     {
-
+        public string FullName { get; set; }
     }
 }

@@ -51,6 +51,7 @@
     <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\IGenericRepository.cs" />
     <Compile Include="ECommerceContext.cs" />
+    <Compile Include="ECommerceUnitOfWork.cs" />
     <Compile Include="Member\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
