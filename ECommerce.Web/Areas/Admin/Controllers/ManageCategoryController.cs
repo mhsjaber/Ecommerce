@@ -12,7 +12,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         private CategoryModel categoryModel = new CategoryModel();
         public ActionResult Index()
         {
-            var model = categoryModel.GetCategories()
+            var model = categoryModel.GetCategories();
             return View(model);
         }
 
