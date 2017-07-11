@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ECommerce.Web.Areas.Admin.Models.CategoryViewModel>
+@{
+    ViewBag.Title = "Index";
+    int count = 1;
+}
+<section class="content-header">
+    <h1>
+        Categories
+        <small>List of Product Categories</small>
+        <a href="/Admin/ManageCategory/Create" class="btn btn-success">Create New</a>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Categories</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px">Sl</th>
+                                <th>Category Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(count++)</td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <a href="/Admin/ManageCategory/Update/@item.CategoryID">Edit</a> | 
+                                        <a href="javascript:void(0)" onclick="show_modal('@item.CategoryID')">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Category</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete this category?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="/Admin/ManageCategory/Delete">
+                    <input type="hidden" id="cat_id" name="CategoryID"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        function show_modal(id) {
+            $('#cat_id').val(id);
+            $('#deleteModal').modal('show');
+        }
+    </script>
+}

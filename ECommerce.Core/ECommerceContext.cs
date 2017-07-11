@@ -1,4 +1,5 @@
-﻿using ECommerce.Core.Member;
+﻿using ECommerce.Core.Category;
+using ECommerce.Core.Member;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,6 +19,8 @@ namespace ECommerce.Core
         }
 
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<ProductCategory> ProductCategory { get; set; }
+        public virtual DbSet<ProductSubCategory> ProductSubCategory { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

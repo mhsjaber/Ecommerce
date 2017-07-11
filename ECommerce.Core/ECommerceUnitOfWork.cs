@@ -1,4 +1,5 @@
-﻿using ECommerce.Core.Data;
+﻿using ECommerce.Core.Category;
+using ECommerce.Core.Data;
 using ECommerce.Core.Member;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,32 @@ namespace ECommerce.Core
         public ECommerceUnitOfWork(ECommerceContext context)
         {
             _context = context;
+        }
+
+        private IGenericRepository<ProductSubCategory> productSubCategoryRepository;
+        public IGenericRepository<ProductSubCategory> ProductSubCategoryRepository
+        {
+            get
+            {
+                if (productSubCategoryRepository == null)
+                {
+                    productSubCategoryRepository = new GenericRepository<ProductSubCategory>(_context);
+                }
+                return productSubCategoryRepository;
+            }
+        }
+
+        private IGenericRepository<ProductCategory> productCategoryRepository;
+        public IGenericRepository<ProductCategory> ProductCategoryRepository
+        {
+            get
+            {
+                if (productCategoryRepository == null)
+                {
+                    productCategoryRepository = new GenericRepository<ProductCategory>(_context);
+                }
+                return productCategoryRepository;
+            }
         }
 
         private IGenericRepository<Customer> customerRepository;

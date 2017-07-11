@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category\ProductCategory.cs" />
+    <Compile Include="Category\ProductSubCategory.cs" />
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\IGenericRepository.cs" />
