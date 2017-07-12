@@ -21,6 +21,7 @@ namespace ECommerce.Core
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<ProductSubCategory> ProductSubCategory { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -43,6 +43,19 @@ namespace ECommerce.Core
             }
         }
 
+        private IGenericRepository<Product> productRepository;
+        public IGenericRepository<Product> ProductRepository
+        {
+            get
+            {
+                if (productRepository == null)
+                {
+                    productRepository = new GenericRepository<Product>(_context);
+                }
+                return productRepository;
+            }
+        }
+
         private IGenericRepository<Customer> customerRepository;
         public IGenericRepository<Customer> CustomerRepository
         {

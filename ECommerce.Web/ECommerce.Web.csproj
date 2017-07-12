@@ -150,8 +150,11 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageSubCategoryController.cs" />
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
-    <Compile Include="Areas\Admin\Models\CategoryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubCategoryModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,6 +180,11 @@
     <Content Include="Areas\Admin\Views\ManageCategory\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCategory\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageCategory\Update.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageSubCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageSubCategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageSubCategory\Update.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageProduct\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

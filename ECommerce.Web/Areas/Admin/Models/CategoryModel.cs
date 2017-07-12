@@ -7,6 +7,12 @@ using System.Web;
 
 namespace ECommerce.Web.Areas.Admin.Models
 {
+    public class CategoryViewModel
+    {
+        public Guid CategoryID { get; set; }
+        public string CategoryName { get; set; }
+    }
+
     public class CategoryModel
     {
         private ECommerceUnitOfWork _unit;
@@ -24,7 +30,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             {
                 var obj = new CategoryViewModel();
                 obj.CategoryID = category.ID;
-                obj.Name = category.Name;
+                obj.CategoryName = category.Name;
                 list.Add(obj);
             }
             return list;
@@ -35,14 +41,14 @@ namespace ECommerce.Web.Areas.Admin.Models
             var category = _unit.ProductCategoryRepository.GetById(id);
             var model = new CategoryViewModel();
             model.CategoryID = category.ID;
-            model.Name = category.Name;
+            model.CategoryName = category.Name;
             return model;
         }
 
         public void CreateCategory(CategoryViewModel model)
         {
             var category = new ProductCategory();
-            category.Name = model.Name;
+            category.Name = model.CategoryName;
             _unit.ProductCategoryRepository.Add(category);
             _unit.Save();
         }
@@ -50,7 +56,7 @@ namespace ECommerce.Web.Areas.Admin.Models
         public void UpdateCategory(CategoryViewModel model)
         {
             var category = _unit.ProductCategoryRepository.GetById(model.CategoryID);
-            category.Name = model.Name;
+            category.Name = model.CategoryName;
             _unit.ProductCategoryRepository.Update(category);
             _unit.Save();
         }
@@ -58,6 +64,12 @@ namespace ECommerce.Web.Areas.Admin.Models
         public void DeleteCategory(Guid categoryID)
         {
             var category = _unit.ProductCategoryRepository.GetById(categoryID);
+            var subCategories = _unit.ProductSubCategoryRepository.GetAll().Where(x => x.CategoryID == categoryID).ToList();
+            foreach (var sub in subCategories)
+            {
+                _unit.ProductSubCategoryRepository.Delete(sub);
+                _unit.Save();
+            }
             _unit.ProductCategoryRepository.Delete(category);
             _unit.Save();
         }
