@@ -22,7 +22,8 @@ namespace ECommerce.Web.Areas.Admin.Models
         public int Price { get; set; }
         public int UnitAvailable { get; set; }
         public string Image { get; set; }
-        public HttpPostedFile ImageFile { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
+        public List<ProductSubCategory> SubCategory { get; set; }
     }
 
     public class ProductModel
@@ -54,16 +55,28 @@ namespace ECommerce.Web.Areas.Admin.Models
             return list;
         }
 
-        public SubCategoryViewModel GetDetails(Guid id)
+        public ProductViewModel GetDetails(Guid id)
         {
-            var subCategory = _unit.ProductSubCategoryRepository.GetById(id);
-            var category = _unit.ProductCategoryRepository.GetById(subCategory.CategoryID);
-            var model = new SubCategoryViewModel();
-            model.SubCategoryID = subCategory.ID;
-            model.SubCategoryName = subCategory.Name;
-            model.CategoryID = category.ID;
-            model.CategoryName = category.Name;
+            var product = _unit.ProductRepository.GetById(id);
+            var model = new ProductViewModel();
+            model.SubCategoryID = product.SubCategoryID;
+            model.ID = product.ID;
+            model.Color = product.Color;
+            model.Description = product.Description;
+            model.Image = product.Image;
+            model.Name = product.Name;
+            model.Price = product.Price;
+            model.CategoryID = _unit.ProductSubCategoryRepository.GetById(product.SubCategoryID).CategoryID;
+            model.SubCategory = _unit.ProductSubCategoryRepository.GetAll().ToList().Where(x => x.CategoryID == model.CategoryID).ToList();
             return model;
+        }
+
+        public void StoreItem(ProductViewModel model)
+        {
+            var product = _unit.ProductRepository.GetById(model.ID);
+            product.UnitAvailable += model.UnitAvailable;
+            _unit.ProductRepository.Update(product);
+            _unit.Save();
         }
 
         public void CreateProduct(ProductViewModel model)
@@ -73,24 +86,29 @@ namespace ECommerce.Web.Areas.Admin.Models
             product.Color = model.Color;
             product.Name = model.Name;
             product.Price = model.Price;
+            product.Image = model.Image;
             product.SubCategoryID = model.SubCategoryID;
             _unit.ProductRepository.Add(product);
             _unit.Save();
         }
 
-        public void UpdateSubCategory(SubCategoryViewModel model)
+        public void UpdateProduct(ProductViewModel model)
         {
-            var subCategory = _unit.ProductSubCategoryRepository.GetById(model.CategoryID);
-            subCategory.Name = model.SubCategoryName;
-            subCategory.CategoryID = model.CategoryID;
-            _unit.ProductSubCategoryRepository.Update(subCategory);
+            var product = _unit.ProductRepository.GetById(model.ID);
+            product.Description = model.Description;
+            product.Color = model.Color;
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.Image = model.Image;
+            product.SubCategoryID = model.SubCategoryID;
+            _unit.ProductRepository.Update(product);
             _unit.Save();
         }
 
-        public void DeleteSubCategory(Guid subCategoryID)
+        public void DeleteProduct(Guid productID)
         {
-            var subCategory = _unit.ProductSubCategoryRepository.GetById(subCategoryID);
-            _unit.ProductSubCategoryRepository.Delete(subCategory);
+            var product = _unit.ProductRepository.GetById(productID);
+            _unit.ProductRepository.Delete(product);
             _unit.Save();
         }
     }

@@ -185,6 +185,7 @@
     <Content Include="Areas\Admin\Views\ManageSubCategory\Update.cshtml" />
     <Content Include="Areas\Admin\Views\ManageProduct\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageProduct\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageProduct\Update.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -214,6 +215,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Uploads\img\product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
