@@ -1,0 +1,5 @@
+bin
+/ECommerce.Core/obj
+/ECommerce.Web/bin
+/ECommerce.Web/obj
+/ECommerce.Web/Web.config
