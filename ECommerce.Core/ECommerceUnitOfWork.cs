@@ -83,6 +83,19 @@ namespace ECommerce.Core
             }
         }
 
+        private IGenericRepository<InvoiceProduct> invoiceProductRepository;
+        public IGenericRepository<InvoiceProduct> InvoiceProductRepository
+        {
+            get
+            {
+                if (invoiceProductRepository == null)
+                {
+                    invoiceProductRepository = new GenericRepository<InvoiceProduct>(_context);
+                }
+                return invoiceProductRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();

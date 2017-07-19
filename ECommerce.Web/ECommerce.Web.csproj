@@ -189,6 +189,8 @@
     <Content Include="Areas\Admin\Views\ManageProduct\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ManageProduct\Update.cshtml" />
     <Content Include="Areas\Admin\Views\ManageInvoice\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageInvoice\PlacedOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageInvoice\Delivered.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
