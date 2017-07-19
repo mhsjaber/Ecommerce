@@ -1,4 +1,5 @@
 ﻿using ECommerce.Core.Category;
+using ECommerce.Core.CustomerInvoice;
 using ECommerce.Core.Data;
 using ECommerce.Core.Member;
 using System;
@@ -66,6 +67,19 @@ namespace ECommerce.Core
                     customerRepository = new GenericRepository<Customer>(_context);
                 }
                 return customerRepository;
+            }
+        }
+
+        private IGenericRepository<Invoice> invoiceRepository;
+        public IGenericRepository<Invoice> InvoiceRepository
+        {
+            get
+            {
+                if (invoiceRepository == null)
+                {
+                    invoiceRepository = new GenericRepository<Invoice>(_context);
+                }
+                return invoiceRepository;
             }
         }
 

@@ -15,7 +15,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         private SubCategoryModel subCategoryModel = new SubCategoryModel();
         public ActionResult Index()
         {
-            var model = productModel.GetProducts();
+            var model = productModel.Get();
             return View(model);
         }
 
@@ -36,7 +36,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 model.ImageFile.SaveAs(path);
                 model.Image = filename;
             }
-            productModel.CreateProduct(model);
+            productModel.Create(model);
             return RedirectToAction("Index");
         }
 
@@ -57,14 +57,14 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 model.ImageFile.SaveAs(path);
                 model.Image = filename;
             }
-            productModel.UpdateProduct(model);
+            productModel.Update(model);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Delete(Guid ID)
         {
-            productModel.DeleteProduct(ID);
+            productModel.Delete(ID);
             return RedirectToAction("Index");
         }
 

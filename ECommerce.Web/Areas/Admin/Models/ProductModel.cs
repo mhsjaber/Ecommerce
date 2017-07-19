@@ -34,7 +34,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             _unit = new ECommerceUnitOfWork(new ECommerceContext());
         }
 
-        public List<ProductViewModel> GetProducts()
+        public List<ProductViewModel> Get()
         {
             var products = _unit.ProductRepository.GetAll();
             var list = new List<ProductViewModel>();
@@ -79,7 +79,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             _unit.Save();
         }
 
-        public void CreateProduct(ProductViewModel model)
+        public void Create(ProductViewModel model)
         {
             var product = new Product();
             product.Description = model.Description;
@@ -92,7 +92,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             _unit.Save();
         }
 
-        public void UpdateProduct(ProductViewModel model)
+        public void Update(ProductViewModel model)
         {
             var product = _unit.ProductRepository.GetById(model.ID);
             product.Description = model.Description;
@@ -105,7 +105,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             _unit.Save();
         }
 
-        public void DeleteProduct(Guid productID)
+        public void Delete(Guid productID)
         {
             var product = _unit.ProductRepository.GetById(productID);
             _unit.ProductRepository.Delete(product);
