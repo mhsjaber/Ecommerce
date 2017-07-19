@@ -12,6 +12,8 @@ namespace ECommerce.Web.Areas.Admin.Models
         public DateTime CreatedOn { get; set; }
         public Guid? CustomerID { get; set; }
         public string CustomerName { get; set; }
+        public string Mobile { get; set; }
+        public string Address { get; set; }
         public InvoiceStatus Status { get; set; }
         public List<InvoiceProductViewModel> Products { get; set; }
         public Guid InvoiceID { get; set; }
@@ -63,7 +65,13 @@ namespace ECommerce.Web.Areas.Admin.Models
             var dets = _unit.InvoiceProductRepository.GetAll().Where(x => x.InvoiceID == id).ToList();
             var model = new InvoiceViewModel();
             model.InvoiceID = id;
-            model.CustomerName = invoice.CustomerID.HasValue ? _unit.CustomerRepository.GetById(invoice.CustomerID.Value).FullName : "";
+            if (invoice.CustomerID.HasValue)
+            {
+                var customer = _unit.CustomerRepository.GetById(invoice.CustomerID.Value);
+                model.CustomerName = customer.FullName;
+                model.Mobile = customer.Mobile;
+                model.Address = customer.Address;
+            }
             model.CreatedOn = invoice.CreatedOn;
             model.Number = invoice.Number;
             model.Status = invoice.Status;
