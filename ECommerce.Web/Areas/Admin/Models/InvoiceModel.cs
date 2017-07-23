@@ -61,34 +61,42 @@ namespace ECommerce.Web.Areas.Admin.Models
 
         public InvoiceViewModel GetDetails(Guid id)
         {
-            var invoice = _unit.InvoiceRepository.GetById(id);
-            var dets = _unit.InvoiceProductRepository.GetAll().Where(x => x.InvoiceID == id).ToList();
-            var model = new InvoiceViewModel();
-            model.InvoiceID = id;
-            if (invoice.CustomerID.HasValue)
+            try
             {
-                var customer = _unit.CustomerRepository.GetById(invoice.CustomerID.Value);
-                model.CustomerName = customer.FullName;
-                model.Mobile = customer.Mobile;
-                model.Address = customer.Address;
+                var invoice = _unit.InvoiceRepository.GetById(id);
+                var dets = _unit.InvoiceProductRepository.GetAll().Where(x => x.InvoiceID == id).ToList();
+                var model = new InvoiceViewModel();
+                model.InvoiceID = id;
+                if (invoice.CustomerID.HasValue)
+                {
+                    var customer = _unit.CustomerRepository.GetById(invoice.CustomerID.Value);
+                    model.CustomerName = customer.FullName;
+                    model.Mobile = customer.Mobile;
+                    model.Address = customer.Address;
+                }
+                model.CreatedOn = invoice.CreatedOn;
+                model.Number = invoice.Number;
+                model.Status = invoice.Status;
+                var prods = new List<InvoiceProductViewModel>();
+                var prObj = new ProductModel();
+                foreach (var item in dets)
+                {
+                    prods.Add(new InvoiceProductViewModel()
+                    {
+                        ProductName = prObj.GetDetails(item.ProductID).Name,
+                        Quantity = item.Quantity,
+                        Disccount = item.Discount,
+                        Price = item.Price,
+                        Total = (item.Price * item.Quantity) - item.Discount
+                    });
+                }
+                model.Products = prods;
+                return model;
             }
-            model.CreatedOn = invoice.CreatedOn;
-            model.Number = invoice.Number;
-            model.Status = invoice.Status;
-            var prods = new List<InvoiceProductViewModel>();
-            var prObj = new ProductModel();
-            foreach (var item in dets)
+            catch (Exception ex)
             {
-                prods.Add(new InvoiceProductViewModel() {
-                    ProductName = prObj.GetDetails(item.ProductID).Name,
-                    Quantity = item.Quantity,
-                    Disccount = item.Disccount,
-                    Price = item.Price,
-                    Total = (item.Price * item.Quantity) - item.Disccount
-                });
+                return null;
             }
-            model.Products = prods;
-            return model;
         }
     }
 }

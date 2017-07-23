@@ -23,6 +23,7 @@ namespace ECommerce.Core
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<ProductSubCategory> ProductSubCategory { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<InvoiceProduct> InvoiceProduct { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

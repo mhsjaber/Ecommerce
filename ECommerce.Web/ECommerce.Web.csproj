@@ -150,11 +150,13 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageMemberController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageInvoiceController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageSubCategoryController.cs" />
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
     <Compile Include="Areas\Admin\Models\InvoiceModel.cs" />
+    <Compile Include="Areas\Admin\Models\MemberModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SubCategoryModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -191,6 +193,9 @@
     <Content Include="Areas\Admin\Views\ManageInvoice\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageInvoice\PlacedOrder.cshtml" />
     <Content Include="Areas\Admin\Views\ManageInvoice\Delivered.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageMember\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageMember\Premium.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageInvoice\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -219,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\ManageCustomer\" />
     <Folder Include="Models\" />
     <Folder Include="Uploads\img\product\" />
   </ItemGroup>
