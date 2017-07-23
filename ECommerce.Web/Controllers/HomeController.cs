@@ -12,11 +12,6 @@ namespace ECommerce.Web.Controllers
     {
         public ActionResult Index()
         {
-            var unit = new ECommerceUnitOfWork(new ECommerceContext());
-            var customer = new Customer();
-            customer.FullName = "Jaber Kibria";
-            unit.CustomerRepository.Add(customer);
-            unit.Save();
             return View();
         }
 
