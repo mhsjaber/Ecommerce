@@ -22,5 +22,25 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 .Where(x => x.Status == Core.Member.CustomerStatus.Premium).ToList();
             return View(model);
         }
+
+        public ActionResult Update(Guid id)
+        {
+            var model = memberModel.GetDetails(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Update(MemberViewModel model)
+        {
+            memberModel.Update(model);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            memberModel.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

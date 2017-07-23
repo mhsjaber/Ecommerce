@@ -152,6 +152,7 @@
     <Compile Include="Areas\Admin\Controllers\ManageCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageMemberController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageInvoiceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageMessageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageSubCategoryController.cs" />
     <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
@@ -196,6 +197,9 @@
     <Content Include="Areas\Admin\Views\ManageMember\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageMember\Premium.cshtml" />
     <Content Include="Areas\Admin\Views\ManageInvoice\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageInvoice\Update.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageMember\Update.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageMessage\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

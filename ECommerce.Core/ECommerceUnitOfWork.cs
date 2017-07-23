@@ -96,6 +96,20 @@ namespace ECommerce.Core
             }
         }
 
+
+        private IGenericRepository<Message> messageRepository;
+        public IGenericRepository<Message> MessageRepository
+        {
+            get
+            {
+                if (messageRepository == null)
+                {
+                    messageRepository = new GenericRepository<Message>(_context);
+                }
+                return messageRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();

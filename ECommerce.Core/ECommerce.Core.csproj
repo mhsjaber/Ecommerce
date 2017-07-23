@@ -57,6 +57,7 @@
     <Compile Include="ECommerceContext.cs" />
     <Compile Include="ECommerceUnitOfWork.cs" />
     <Compile Include="Member\Customer.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -25,6 +25,7 @@ namespace ECommerce.Core
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<InvoiceProduct> InvoiceProduct { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<Message> Message { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

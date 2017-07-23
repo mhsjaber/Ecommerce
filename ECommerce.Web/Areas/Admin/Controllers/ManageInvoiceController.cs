@@ -36,5 +36,12 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             var model = invoiceModel.GetDetails(id);
             return View(model);
         }
+
+        public ActionResult Update(Guid id)
+        {
+            var model = invoiceModel.GetDetails(id);
+            return View(model);
+        }
+
     }
 }

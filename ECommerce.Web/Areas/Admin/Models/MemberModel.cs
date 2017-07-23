@@ -28,6 +28,45 @@ namespace ECommerce.Web.Areas.Admin.Models
             _unit = new ECommerceUnitOfWork(new ECommerceContext());
         }
 
+        internal MemberViewModel GetDetails(Guid id)
+        {
+            var member = _unit.CustomerRepository.GetAll()
+                    .Where(x => x.ID == id).FirstOrDefault();
+            var model = new MemberViewModel()
+            {
+                MemberID = member.ID,
+                FullName = member.FullName,
+                Mobile = member.Mobile,
+                Username = member.Username,
+                CreatedOn = member.CreatedOn,
+                Status = member.Status,
+                Email = member.Email,
+                Password = member.Password,
+                Address = member.Address
+            };
+            return model;
+        }
+
+        internal void Delete(Guid id)
+        {
+            var customer = _unit.CustomerRepository.GetById(id);
+            _unit.CustomerRepository.Delete(customer);
+            _unit.Save();
+        }
+
+        internal void Update(MemberViewModel model)
+        {
+            var member = _unit.CustomerRepository.GetAll()
+                    .Where(x => x.ID == model.MemberID).FirstOrDefault();
+            member.Address = model.Address;
+            member.FullName = model.FullName;
+            member.Mobile = model.Mobile;
+            member.Status = model.Status;
+            member.Username = model.Username;
+            _unit.CustomerRepository.Update(member);
+            _unit.Save();
+        }
+
         public List<MemberViewModel> Get()
         {
             try
