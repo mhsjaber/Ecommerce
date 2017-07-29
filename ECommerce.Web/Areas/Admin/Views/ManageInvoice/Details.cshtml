@@ -1,7 +1,79 @@
 ﻿@model ECommerce.Web.Areas.Admin.Models.InvoiceViewModel
 @{
     ViewBag.Title = "Details";
+    int count = 1;
 }
-
-<h2>Details</h2>
-
+<section class="content-header">
+    <h1>
+        Invoice Details
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Invoice Details</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Inv. No.</th>
+                            <td>INV-@Model.Number.ToString("0000") </td>
+                            <th>Create Date</th>
+                            <td>@Model.CreatedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                        </tr>
+                        <tr>
+                            <th>Customer Name</th>
+                            <td>@Model.CustomerName</td>
+                            <th>Status</th>
+                            <td>@Model.Status</td>
+                        </tr>
+                        <tr>
+                            <th>Total Items</th>
+                            <td>@Model.Products.Select(x => x.Quantity).Sum()</td>
+                            <th>Grand Total</th>
+                            <td>@Model.Products.Select(x => x.Total).Sum()</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Product List</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Products)
+                                    {
+                                        <tr>
+                                            <td>@(count++.ToString("00"))</td>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Disccount</td>
+                                            <td>@item.Total</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

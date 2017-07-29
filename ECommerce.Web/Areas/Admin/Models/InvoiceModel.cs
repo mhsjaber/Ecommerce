@@ -18,6 +18,10 @@ namespace ECommerce.Web.Areas.Admin.Models
         public List<InvoiceProductViewModel> Products { get; set; }
         public Guid InvoiceID { get; set; }
         public int Number { get; set; }
+
+        public int[] ProductQuantity { get; set; }
+        public double[] ProductDiscount { get; set; }
+        public Guid[] InvoiceProductID { get; set; }
     }
 
     public class InvoiceProductViewModel
@@ -59,6 +63,33 @@ namespace ECommerce.Web.Areas.Admin.Models
             return list;
         }
 
+        public void Update(InvoiceViewModel model)
+        {
+            try
+            {
+                var prods = _unit.InvoiceProductRepository.GetAll().ToList().Where(x => x.InvoiceID == model.InvoiceID).ToList();
+                foreach (var item in prods)
+                {
+                    if (model.InvoiceProductID.Any(x => x == item.ID))
+                    {
+                        var index = Array.IndexOf(model.InvoiceProductID, item.ID);
+                        item.Quantity = model.ProductQuantity[index];
+                        item.Discount = model.ProductDiscount[index];
+                        _unit.InvoiceProductRepository.Update(item);
+                    }
+                    else
+                    {
+                        _unit.InvoiceProductRepository.Delete(item);
+                    }
+                    _unit.Save();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         public InvoiceViewModel GetDetails(Guid id)
         {
             try
@@ -87,7 +118,8 @@ namespace ECommerce.Web.Areas.Admin.Models
                         Quantity = item.Quantity,
                         Disccount = item.Discount,
                         Price = item.Price,
-                        Total = (item.Price * item.Quantity) - item.Discount
+                        Total = (item.Price * item.Quantity) - item.Discount,
+                        ID = item.ID
                     });
                 }
                 model.Products = prods;

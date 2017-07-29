@@ -12,6 +12,7 @@ namespace ECommerce.Core.CustomerInvoice
     {
         InProgress = 1,
         PlacedOrder,
+        OnDelivery,
         Delivered,
         Cancelled
     }

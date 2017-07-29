@@ -31,6 +31,13 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        public ActionResult OnDelivery()
+        {
+            var model = invoiceModel.Get()
+                .Where(x => x.Status == Core.CustomerInvoice.InvoiceStatus.OnDelivery).ToList();
+            return View(model);
+        }
+
         public ActionResult Details(Guid id)
         {
             var model = invoiceModel.GetDetails(id);
@@ -43,5 +50,11 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult Update(InvoiceViewModel model)
+        {
+            invoiceModel.Update(model);
+            return RedirectToAction("Index");
+        }
     }
 }

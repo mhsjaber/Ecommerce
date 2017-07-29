@@ -200,6 +200,7 @@
     <Content Include="Areas\Admin\Views\ManageInvoice\Update.cshtml" />
     <Content Include="Areas\Admin\Views\ManageMember\Update.cshtml" />
     <Content Include="Areas\Admin\Views\ManageMessage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageInvoice\OnDelivery.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
