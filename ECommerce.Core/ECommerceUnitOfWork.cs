@@ -110,6 +110,19 @@ namespace ECommerce.Core
             }
         }
 
+        private IGenericRepository<FeaturedProduct> featuredProductRepository;
+        public IGenericRepository<FeaturedProduct> FeaturedProductRepository
+        {
+            get
+            {
+                if (featuredProductRepository == null)
+                {
+                    featuredProductRepository = new GenericRepository<FeaturedProduct>(_context);
+                }
+                return featuredProductRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();

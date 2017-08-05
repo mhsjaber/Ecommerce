@@ -1,5 +1,6 @@
 ﻿using ECommerce.Core;
 using ECommerce.Core.Member;
+using ECommerce.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,13 @@ namespace ECommerce.Web.Controllers
         private ECommerceUnitOfWork _unit = new ECommerceUnitOfWork(new ECommerceContext());
         public ActionResult Index()
         {
-            var model = _unit.ProductRepository.GetAll().ToList();
+            var model = new HomeModel();
+            model.Products = _unit.ProductRepository.GetAll().ToList();
+
+            var featured = _unit.FeaturedProductRepository.GetAll().ToList().Select(x=> x.ProductID).ToList();
+            var fs = model.Products.Where(x => featured.Any(a => a == x.ID)).ToList();
+            model.FeaturedProducts = fs;
+
             return View(model);
         }
 

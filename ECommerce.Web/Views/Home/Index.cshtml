@@ -1,8 +1,11 @@
-﻿@model IEnumerable<ECommerce.Core.Product>
+﻿@model ECommerce.Web.Models.HomeModel
 @{
     ViewBag.Title = "Home Page";
     ViewBag.Page = "home";
-    var products = Model.Take(6);
+    var products = Model.Products.Take(6);
+    var fproducts = Model.FeaturedProducts.Take(6);
+
+    int t = 0;
 }
 <section id="slider">
     <div class="container">
@@ -74,37 +77,9 @@
 
                 <div class="features_items">
                     <h2 class="title text-center">Featured Products</h2>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img src="~/Content/images/home/product1.jpg" alt="" />
-                                    <h2>$56</h2>
-                                    <p>Easy Polo Black Edition</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="features_items">
-                    <h2 class="title text-center">All Products</h2>
-
-                    @foreach (var item in products)
+                    @foreach (var item in fproducts)
                     {
+                        t++;
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
@@ -131,11 +106,59 @@
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li><a href="/Product/Details/@item.ID"><i class="fa fa-plus-square"></i>View Details</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        if (t % 3 == 0)
+                        {
+                            <div class="clearfix"></div>
+                        }
+                    }
+                </div>
+
+                <div class="features_items">
+                    <h2 class="title text-center">All Products</h2>
+
+                    @foreach (var item in products)
+                    {
+                        t++;
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        @if (string.IsNullOrWhiteSpace(item.Image))
+                                        {
+                                            <img src="~/Uploads/img/product/dummy_product.jpg" alt="" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Uploads/img/product/@item.Image" alt="" />
+                                        }
+                                        <h2>$@item.Price</h2>
+                                        <p>@item.Name</p>
+                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2>$@item.Price</h2>
+                                            <p>@item.Name</p>
+                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li><a href="/Product/Details/@item.ID"><i class="fa fa-plus-square"></i>View Details</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        if (t % 3 == 0)
+                        {
+                            <div class="clearfix"></div>
+                        }
                     }
                 </div>
 
