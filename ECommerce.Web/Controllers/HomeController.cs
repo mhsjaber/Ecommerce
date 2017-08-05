@@ -13,7 +13,8 @@ namespace ECommerce.Web.Controllers
         private ECommerceUnitOfWork _unit = new ECommerceUnitOfWork(new ECommerceContext());
         public ActionResult Index()
         {
-            return View();
+            var model = _unit.ProductRepository.GetAll().ToList();
+            return View(model);
         }
 
         public ActionResult About()

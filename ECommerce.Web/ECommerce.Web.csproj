@@ -923,6 +923,9 @@
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Uploads\img\product\2ad165fe-b26a-467e-861d-3ddf4a4555a4.jpg" />
+    <Content Include="Uploads\img\product\6de1241b-4922-4b86-b9ff-def5c11206a0.jpg" />
+    <Content Include="Uploads\img\product\dummy_product.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -942,7 +945,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\ManageCustomer\" />
-    <Folder Include="Uploads\img\product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
