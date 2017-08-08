@@ -33,19 +33,19 @@
                     <div class="col-sm-6">
                         <div class="contactinfo">
                             <ul class="nav nav-pills">
-                                <li><a href="#"><i class="fa fa-phone"></i> +88 01717 123 456</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-phone"></i> +88 01717 123 456</a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-envelope"></i> info@domain.com</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-google-plus"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -65,10 +65,17 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                <li><a href="/Profile/Index"><i class="fa fa-user"></i> Account</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                                @if (HttpContext.Current.Session["Username"] != null)
+                                {
+                                    <li><a href="/Profile/Logout"><i class="fa fa-lock"></i> Log Out</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/Profile/Login"><i class="fa fa-lock"></i> Login</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -93,7 +100,6 @@
                             <ul class="nav navbar-nav collapse navbar-collapse">
                                 <li><a href="/home" id="home">Home</a></li>
                                 <li><a href="/Product" id="product">Products</a></li>
-                                <li><a href="/Blog" id="blog">Blog</a></li>
                                 <li><a href="/Home/About" id="about">About</a></li>
                                 <li><a href="/Home/contact" id="contact">Contact</a></li>
                             </ul>
@@ -117,14 +123,14 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="companyinfo">
-                            <h2 style="font-size: 24px;"><span>BCD</span>-Commerce</h2>
+                            <h2><span>E</span>-Shopper</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
                         </div>
                     </div>
                     <div class="col-sm-7">
                         <div class="col-sm-3">
                             <div class="video-gallery text-center">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <div class="iframe-img">
                                         <img src="~/Content/images/home/iframe1.png" alt="" />
                                     </div>
@@ -139,7 +145,7 @@
 
                         <div class="col-sm-3">
                             <div class="video-gallery text-center">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <div class="iframe-img">
                                         <img src="~/Content/images/home/iframe2.png" alt="" />
                                     </div>
@@ -154,7 +160,7 @@
 
                         <div class="col-sm-3">
                             <div class="video-gallery text-center">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <div class="iframe-img">
                                         <img src="~/Content/images/home/iframe3.png" alt="" />
                                     </div>
@@ -169,7 +175,7 @@
 
                         <div class="col-sm-3">
                             <div class="video-gallery text-center">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <div class="iframe-img">
                                         <img src="~/Content/images/home/iframe4.png" alt="" />
                                     </div>
@@ -199,11 +205,11 @@
                         <div class="single-widget">
                             <h2>Service</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Online Help</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Order Status</a></li>
-                                <li><a href="#">Change Location</a></li>
-                                <li><a href="#">FAQ’s</a></li>
+                                <li><a href="javascript:void(0)">Online Help</a></li>
+                                <li><a href="javascript:void(0)">Contact Us</a></li>
+                                <li><a href="javascript:void(0)">Order Status</a></li>
+                                <li><a href="javascript:void(0)">Change Location</a></li>
+                                <li><a href="javascript:void(0)">FAQ’s</a></li>
                             </ul>
                         </div>
                     </div>
@@ -211,11 +217,11 @@
                         <div class="single-widget">
                             <h2>Quock Shop</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">T-Shirt</a></li>
-                                <li><a href="#">Mens</a></li>
-                                <li><a href="#">Womens</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Shoes</a></li>
+                                <li><a href="javascript:void(0)">T-Shirt</a></li>
+                                <li><a href="javascript:void(0)">Mens</a></li>
+                                <li><a href="javascript:void(0)">Womens</a></li>
+                                <li><a href="javascript:void(0)">Gift Cards</a></li>
+                                <li><a href="javascript:void(0)">Shoes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -223,11 +229,11 @@
                         <div class="single-widget">
                             <h2>Policies</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Terms of Use</a></li>
-                                <li><a href="#">Privecy Policy</a></li>
-                                <li><a href="#">Refund Policy</a></li>
-                                <li><a href="#">Billing System</a></li>
-                                <li><a href="#">Ticket System</a></li>
+                                <li><a href="javascript:void(0)">Terms of Use</a></li>
+                                <li><a href="javascript:void(0)">Privecy Policy</a></li>
+                                <li><a href="javascript:void(0)">Refund Policy</a></li>
+                                <li><a href="javascript:void(0)">Billing System</a></li>
+                                <li><a href="javascript:void(0)">Ticket System</a></li>
                             </ul>
                         </div>
                     </div>
@@ -288,6 +294,17 @@
         $(document).ready(function () {
             $('#@ViewBag.Page').addClass('active');
         });
+
+        function AddToCart(id) {
+            $.ajax({
+                url: "/Shop/AddToCart",
+                data: { id: id },
+                type: 'post',
+                success: function () {
+                    $.notify('Product added to cart', 'success');
+                }
+            });
+        }
     </script>
 </body>
 </html>

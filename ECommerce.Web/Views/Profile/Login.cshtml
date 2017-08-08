@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .sec {
+        display: block;
+        margin-bottom: 135px;
+        margin-top: 40px;
+        overflow: hidden;
+    }
+</style>
+
+<section class="sec">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1" style="margin-top: 60px">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Login to your account</h2>
+                    <form action="/Profile/Login" method="post">
+                        <input type="text" placeholder="Username" name="Username" required/>
+                        <input type="password" placeholder="Password" name="Password" required/>
+                        <button type="submit" class="btn btn-default">Login</button>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-1" style="margin-top: 60px">
+                <h2 class="or">OR</h2>
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>New User Signup!</h2>
+                    <form action="/Profile/SignUp" method="post">
+                        <input type="text" placeholder="Full Name" name="FullName" required />
+                        <input type="text" placeholder="Username" name="Username" required />
+                        <input type="email" placeholder="Email Address" name="Email" required />
+                        <input type="text" placeholder="Mobile" name="Mobile" required />
+                        <input type="password" placeholder="Password" name="Password" required />
+                        <input type="password" placeholder="Confirm Password" name="RePassword" required />
+                        <textarea name="Address" placeholder="Address"></textarea>
+                        <button type="submit" class="btn btn-default">Signup</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,41 @@
+﻿@model ECommerce.Web.Models.ProfileModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<section class="sec">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1" style="margin-top: 30px">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Change Password</h2>
+                    <form action="/Profile/ChangePassword" method="post">
+                        <input type="password" placeholder="Old Password" name="OldPassword" required />
+                        <input type="password" placeholder="New Password" name="NewPassword" required />
+                        <input type="password" placeholder="Retype Password" name="RePassword" required />
+                        <button type="submit" class="btn btn-default">Update</button>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-1" style="margin-top: 60px">
+                <h2 class="or">OR</h2>
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>Update Profile</h2>
+                    <form action="/Profile/UpdateProfile" method="post">
+                        <input type="text" placeholder="Full Name" value="@Model.FullName" name="FullName" required />
+                        <input type="text" placeholder="Username" value="@Model.Username" name="Username" required />
+                        <input type="email" placeholder="Email Address" value="@Model.Email" name="Email" required />
+                        <input type="text" placeholder="Mobile" value="@Model.Mobile" name="Mobile" required />
+                        <textarea name="Address" placeholder="Address">@Model.Address</textarea>
+                        <button type="submit" class="btn btn-default" style="margin-bottom: 40px; margin-top: 22px;">Update</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section>

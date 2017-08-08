@@ -162,12 +162,17 @@
     <Compile Include="Areas\Admin\Models\SubCategoryModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryList.cs" />
     <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\ShopController.cs" />
+    <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -946,10 +951,13 @@
     <Content Include="Views\Shared\_Category.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Profile\Login.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\ManageCustomer\" />
+    <Folder Include="Views\Shop\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
