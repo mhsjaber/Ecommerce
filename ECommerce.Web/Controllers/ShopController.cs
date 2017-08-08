@@ -1,18 +1,19 @@
 ﻿using ECommerce.Core;
 using ECommerce.Core.CustomerInvoice;
+using ECommerce.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ECommerce.Web.Models
+namespace ECommerce.Web.Controllers
 {
     public class ShopController : Controller
     {
         private ECommerceUnitOfWork _unit = new ECommerceUnitOfWork(new ECommerceContext());
         [HttpPost]
-        public ActionResult AddToCart(Guid id)
+        public ActionResult AddToCart(Guid id, int count)
         {
             try
             {
@@ -30,7 +31,7 @@ namespace ECommerce.Web.Models
                     var product = _unit.ProductRepository.GetById(id);
                     var invProduct = new InvoiceProduct();
 
-                    invProduct.Quantity = 1;
+                    invProduct.Quantity = count;
                     invProduct.ProductID = id;
                     invProduct.Price = product.Price;
                     invProduct.Discount = 0;
@@ -38,7 +39,6 @@ namespace ECommerce.Web.Models
 
                     _unit.InvoiceProductRepository.Add(invProduct);
                     _unit.Save();
-
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace ECommerce.Web.Models
                     if (available == null)
                     {
                         var invProduct = new InvoiceProduct();
-                        invProduct.Quantity = 1;
+                        invProduct.Quantity = count;
                         invProduct.ProductID = id;
                         invProduct.Price = product.Price;
                         invProduct.Discount = 0;
@@ -57,7 +57,7 @@ namespace ECommerce.Web.Models
                     }
                     else
                     {
-                        available.Quantity++;
+                        available.Quantity += count;
                         _unit.InvoiceProductRepository.Update(available);
                     }
                     _unit.Save();
@@ -68,6 +68,42 @@ namespace ECommerce.Web.Models
             {
                 return Json(false);
             }
+        }
+
+        public ActionResult Details()
+        {
+            if (Session["InvoiceID"] == null)
+            {
+                Session["Notify"] = "Invoice not found.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var invoiceID = Guid.Parse(Session["InvoiceID"].ToString());
+            var invoice = _unit.InvoiceRepository.GetById(invoiceID);
+            var products = _unit.InvoiceProductRepository.GetAll()
+                .Where(x => x.InvoiceID == invoiceID).ToList();
+            var model = new ShopModel();
+            var list = new List<ProductList>();
+
+            foreach (var item in products)
+            {
+                var prod = _unit.ProductRepository.GetById(item.ProductID);
+                var p = new ProductList()
+                {
+                    Discount = item.Discount,
+                    ImageLink = prod.Image,
+                    Name = prod.Name,
+                    Number = prod.ItemNumber.ToString("000000"),
+                    Price = prod.Price,
+                    Quantity = item.Quantity,
+                    Total = prod.Price * item.Quantity - item.Discount
+                };
+                list.Add(p);
+            }
+            model.Products = list;
+            model.GrandTotal = model.Products.Select(x => x.Total).ToList().Sum();
+            return View(model);
         }
     }
 }

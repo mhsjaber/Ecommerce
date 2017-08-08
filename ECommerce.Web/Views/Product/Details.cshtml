@@ -40,8 +40,8 @@
                             <span>
                                 <span>US $@Model.Product.Price</span>
                                 <label>Quantity:</label>
-                                <input type="text" value="3" />
-                                <button type="button" class="btn btn-fefault cart" onclick="AddToCart('@Model.Product.ID')">
+                                <input type="text" value="3" id="quantity"/>
+                                <button type="button" class="btn btn-fefault cart" onclick="preAddToCart('@Model.Product.ID')">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
                                 </button>
@@ -93,14 +93,11 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div><!--/category-tab-->
 
                 <div class="recommended_items">
-                    
                     <h2 class="title text-center">recommended items</h2>
-
                     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="item active">
@@ -120,7 +117,7 @@
                                                     }
                                                     <h2>$@item.Price</h2>
                                                     <p>@item.Name</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                                    <button type="button" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +141,7 @@
                                                 }
                                                 <h2>$@item.Price</h2>
                                                 <p>@item.Name</p>
-                                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                                <button type="button" class="btn btn-default add-to-cart" onclick="AddToCart('@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                             </div>
                                         </div>
                                     </div>
