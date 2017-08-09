@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Shipment";
+}
+<section id="cart_items">
+    <div class="container">
+        <div class="register-req">
+            <p>Please use Register if you are a new customer. Otherwise use Login.</p>
+        </div><!--/register-req-->
+        <div class="shopper-informations">
+            <div class="row">
+                @if (HttpContext.Current.Session["Username"] == null)
+                {
+                <div class="col-sm-4">
+                    <div class="shopper-info">
+                        <p>Register</p>
+                        <form action="/Shop/Signup" method="post">
+                            <input type="text" placeholder="Display Name" name="FullName">
+                            <input type="text" placeholder="Username" name="Username">
+                            <input type="text" placeholder="Email Address" name="Email">
+                            <input type="text" placeholder="Mobile" name="Mobile">
+                            <input type="password" placeholder="Password" name="Password">
+                            <input type="password" placeholder="Confirm password" name="RePassword">
+                            <textarea name="Address" placeholder="Address"></textarea>
+                            <button class="btn btn-primary" type="submit">Register</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="shopper-info">
+                        <p>Login</p>
+                        <form action="/Shop/Login" method="post">
+                            <input type="text" placeholder="Username" name="Username">
+                            <input type="password" placeholder="Password" name="Password">
+                            <button class="btn btn-primary" type="submit">Login</button>
+                        </form>
+                    </div>
+                </div>
+                }
+                else
+                {
+                    <div class="col-sm-4"></div>
+                }
+                <div class="col-sm-4 clearfix">
+                    <div class="shopper-info">
+                        <p>Bill To</p>
+                        <form method="post" action="/Shop/Shipment">
+                            <input type="text" placeholder="Ful Name" name="FullName">
+                            <input type="text" placeholder="Email *" name="Email">
+                            <input type="text" placeholder="Mobile 1" name="Mobile">
+                            <input type="text" placeholder="Mobile 2 *" name="OptionalMobile">
+                            <textarea name="Address" placeholder="Address"></textarea>
+                            <button class="btn btn-primary" type="submit">Check Out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+    </div>
+</section> <!--/#cart_items-->

@@ -63,7 +63,6 @@ namespace ECommerce.Web.Controllers
             }
         }
 
-
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -123,6 +122,13 @@ namespace ECommerce.Web.Controllers
                 _unit.CustomerRepository.Add(customer);
                 _unit.Save();
                 Session["Username"] = model.Username;
+                if (Session["InvoiceID"] != null)
+                {
+                    var invoice = _unit.InvoiceRepository.GetById(Guid.Parse(Session["InvoiceID"].ToString()));
+                    invoice.CustomerID = customer.ID;
+                    _unit.InvoiceRepository.Update(invoice);
+                    _unit.Save();
+                }
                 Session["Notify"] = "User registered successfully.";
                 Session["Type"] = "success";
                 return RedirectToAction("Index");

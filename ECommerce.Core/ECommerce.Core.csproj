@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Category\ProductCategory.cs" />
     <Compile Include="Category\ProductSubCategory.cs" />
+    <Compile Include="CustomerInvoice\BillingAddress.cs" />
     <Compile Include="CustomerInvoice\Invoice.cs" />
     <Compile Include="CustomerInvoice\InvoiceProduct.cs" />
     <Compile Include="Data\Entity.cs" />

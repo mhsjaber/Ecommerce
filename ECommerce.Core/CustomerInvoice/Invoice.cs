@@ -24,5 +24,6 @@ namespace ECommerce.Core.CustomerInvoice
         public InvoiceStatus Status { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Number { get; set; }
+        public Guid BillingAddressID { get; set; }
     }
 }

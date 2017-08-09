@@ -123,6 +123,19 @@ namespace ECommerce.Core
             }
         }
 
+        private IGenericRepository<BillingAddress> billingAddressRepository;
+        public IGenericRepository<BillingAddress> BillingAddressRepository
+        {
+            get
+            {
+                if (billingAddressRepository == null)
+                {
+                    billingAddressRepository = new GenericRepository<BillingAddress>(_context);
+                }
+                return billingAddressRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();
