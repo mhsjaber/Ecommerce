@@ -148,7 +148,7 @@ namespace ECommerce.Web.Controllers
                 Session["Notify"] = "Cart update failed. Error: " + ex.Message;
                 Session["Type"] = "error";
             }
-            if (submit != "Update")
+            if (submit == "Update")
                 return RedirectToAction("Details");
             return RedirectToAction("Shipment");
         }
