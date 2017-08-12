@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Core
 {
+    public enum ProductStatus
+    {
+        Publish,
+        Unpublish
+    }
+
     public class Product : Entity
     {
         public string Name { get; set; }
@@ -19,5 +25,6 @@ namespace ECommerce.Core
         public int Price { get; set; }
         public int UnitAvailable { get; set; }
         public string Image { get; set; }
+        public ProductStatus Status { get; set; }
     }
 }

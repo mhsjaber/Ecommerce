@@ -15,7 +15,7 @@ namespace ECommerce.Web.Controllers
         public ActionResult Index()
         {
             var model = new HomeModel();
-            model.Products = _unit.ProductRepository.GetAll().ToList();
+            model.Products = _unit.ProductRepository.GetAll().Where(x => x.Status == ProductStatus.Publish).ToList();
 
             var featured = _unit.FeaturedProductRepository.GetAll().ToList().Select(x=> x.ProductID).ToList();
             var fs = model.Products.Where(x => featured.Any(a => a == x.ID)).ToList();

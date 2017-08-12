@@ -14,7 +14,7 @@ namespace ECommerce.Web.Controllers
         public ActionResult Index(Guid? sub, Guid? cat, int size = 12, int index = 1)
         {
             var model = new ProductModel();
-            var all = _unit.ProductRepository.GetAll().ToList();
+            var all = _unit.ProductRepository.GetAll().Where(x => x.Status == ProductStatus.Publish).ToList();
             if (sub.HasValue)
                 all = all.Where(x => x.SubCategoryID == sub.Value).ToList();
             if (cat.HasValue)

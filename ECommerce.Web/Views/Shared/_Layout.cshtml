@@ -1,6 +1,6 @@
 ﻿@using ECommerce.Web.Models
 @{ 
-    var cats = CategoryList.GetAllCategory().OrderBy(x => x.CategoryName).Take(5).ToList();
+    var cats = CategoryList.GetAllCategory().OrderByDescending(x => x.TotalProducts).Take(5).ToList();
 }
 <!DOCTYPE html>
 <html lang="en">

@@ -12,6 +12,7 @@ namespace ECommerce.Web.Areas.Admin.Models
         public Guid CategoryID { get; set; }
         public string CategoryName { get; set; }
         public List<SubCategoryViewModel> SubCategory { get; set; }
+        public int TotalProducts { get; internal set; }
     }
 
     public class CategoryModel
