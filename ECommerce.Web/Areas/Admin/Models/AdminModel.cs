@@ -12,6 +12,12 @@ namespace ECommerce.Web.Areas.Admin.Models
         public bool CanEdit { get; set; }
     }
 
+    public class AdminLoginModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
     public class AdminModel
     {
         private ECommerceUnitOfWork _unit = new ECommerceUnitOfWork(new ECommerceContext());

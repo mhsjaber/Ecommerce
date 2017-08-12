@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize]
     public class ManageMemberController : Controller
     {
         private MemberModel memberModel = new MemberModel();

@@ -1,4 +1,5 @@
 ﻿using ECommerce.Core;
+using ECommerce.Web.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize]
     public class ManageMessageController : Controller
     {
         private ECommerceUnitOfWork _unit = new ECommerceUnitOfWork(new ECommerceContext());

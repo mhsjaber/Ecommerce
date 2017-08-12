@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize]
     public class ManageAdminController : Controller
     {
         AdminModel adminModel = new AdminModel();
@@ -61,7 +62,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             try
             {
                 if (Session["Admin"] == null)
-                    return RedirectToAction("Index", "Home", "");
+                    return RedirectToAction("Index", "Home", new { area = ""});
 
                 var admin = _unit.AdminRepository.GetAll().ToList().Where(x => x.Username == Session["Admin"].ToString()).FirstOrDefault();
                 if (model.NewPassword == model.RePassword && model.OldPassword == admin.Password)

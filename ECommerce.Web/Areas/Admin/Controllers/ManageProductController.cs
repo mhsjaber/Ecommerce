@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ECommerce.Web.Areas.Admin.Controllers
 {
+    [CustomAuthorize]
     public class ManageProductController : Controller
     {
         private ProductModel productModel = new ProductModel();
