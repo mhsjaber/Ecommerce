@@ -8,45 +8,45 @@
         Edit Invoice
     </h1>
 </section>
-<section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Invoice Details</h3>
+<form action="/Admin/ManageInvoice/Update" method="post">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Invoice Details</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Inv. No.</th>
+                                <td>I-@Model.Number.ToString("000000") </td>
+                                <th>Create Date</th>
+                                <td>@Model.CreatedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Name</th>
+                                <td>@Model.CustomerName</td>
+                                <th>Status</th>
+                                <td>@Html.EnumDropDownListFor(model => model.Status)</td>
+                            </tr>
+                            <tr>
+                                <th>Total Items</th>
+                                <td>@Model.Products.Select(x => x.Quantity).Sum()</td>
+                                <th>Grand Total</th>
+                                <td><span id="grand-total">@Model.Products.Select(x => x.Total).Sum()</span></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="box-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Inv. No.</th>
-                            <td>INV-@Model.Number.ToString("0000") </td>
-                            <th>Create Date</th>
-                            <td>@Model.CreatedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
-                        </tr>
-                        <tr>
-                            <th>Customer Name</th>
-                            <td>@Model.CustomerName</td>
-                            <th>Status</th>
-                            <td>@Model.Status</td>
-                        </tr>
-                        <tr>
-                            <th>Total Items</th>
-                            <td>@Model.Products.Select(x => x.Quantity).Sum()</td>
-                            <th>Grand Total</th>
-                            <td><span id="grand-total">@Model.Products.Select(x => x.Total).Sum()</span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Product List</h3>
-                        </div>
-                        <div class="box-body">
-                            <form action="/Admin/ManageInvoice/Update" method="post">
-                                @Html.HiddenFor(model=> model.InvoiceID)
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Product List</h3>
+                            </div>
+                            <div class="box-body">
+                                @Html.HiddenFor(model => model.InvoiceID)
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -66,11 +66,11 @@
                                                 <td>@(count++.ToString("00"))</td>
                                                 <td>@item.ProductName</td>
                                                 <td><input type="hidden" id="prc-@item.ID" value="@item.Price" />@item.Price</td>
-                                                <td><input name="ProductQuantity[]" value="@item.Quantity" class="form-control" type="number" id="qnt-@item.ID" onchange="calculate('@item.ID')"/></td>
-                                                <td><input name="ProductDiscount[]" value="@item.Disccount" class="form-control" type="number" id="dsc-@item.ID" onchange="calculate('@item.ID')"/></td>
-                                                <td><input value="@item.Total" id="total-@item.ID" readonly class="form-control total"/></td>
+                                                <td><input name="ProductQuantity[]" value="@item.Quantity" class="form-control" type="number" id="qnt-@item.ID" onchange="calculate('@item.ID')" /></td>
+                                                <td><input name="ProductDiscount[]" value="@item.Disccount" class="form-control" type="number" id="dsc-@item.ID" onchange="calculate('@item.ID')" /></td>
+                                                <td><input value="@item.Total" id="total-@item.ID" readonly class="form-control total" /></td>
                                                 <td>
-                                                    <input name="InvoiceProductID[]" type="hidden" value="@item.ID"/>
+                                                    <input name="InvoiceProductID[]" type="hidden" value="@item.ID" />
                                                     <a href="javascript:void(0)" onclick="show_aert('@item.ID')">Remove</a>
                                                 </td>
                                             </tr>
@@ -78,17 +78,17 @@
                                     </tbody>
                                 </table>
                                 <div class="row" style="text-align: center">
-                                    <input type="submit" class="btn btn-primary" value="Update"/>
+                                    <input type="submit" class="btn btn-primary" value="Update" />
                                 </div>
                                 <div class="clearfix"> </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
 
 <div id="deleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

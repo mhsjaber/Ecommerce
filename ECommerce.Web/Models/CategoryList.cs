@@ -28,7 +28,7 @@ namespace ECommerce.Web.Models
                     CategoryID = item.CategoryID,
                     CategoryName = item.CategoryName,
                     SubCategory = subs,
-                    TotalProducts = _unit.ProductRepository.GetAll().Where(x=> subs.Any(y=> y.SubCategoryID == x.SubCategoryID)).ToList().Count()
+                    TotalProducts = _unit.ProductRepository.GetAll().Where(x=> subs.Any(y=> y.SubCategoryID == x.SubCategoryID) && x.Status == ProductStatus.Publish).ToList().Count()
                 });
             }
             return retList;

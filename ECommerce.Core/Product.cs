@@ -10,8 +10,8 @@ namespace ECommerce.Core
 {
     public enum ProductStatus
     {
-        Publish,
-        Unpublish
+        Unpublish,
+        Publish
     }
 
     public class Product : Entity

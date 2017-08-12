@@ -15,7 +15,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         private SubCategoryModel subCategoryModel = new SubCategoryModel();
         public ActionResult Index()
         {
-            var model = productModel.Get();
+           List<ProductViewModel> model = productModel.Get();
             return View(model);
         }
 
@@ -71,8 +71,15 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetSubCategory(Guid CategoryID)
         {
-            var categories = subCategoryModel.GetSubCategories().Where(x => x.CategoryID == CategoryID).ToList();
+            var categories = subCategoryModel.GetSubCategories().Where(x => x.CategoryID == CategoryID).ToList().OrderBy(x => x.SubCategoryName).ToList();
             return Json(categories);
+        }
+
+        [HttpPost]
+        public JsonResult GetProducts(Guid SubCategoryID)
+        {
+            var prods = productModel.Get().Where(x => x.SubCategoryID == SubCategoryID).ToList().OrderBy(x => x.Name).ToList();
+            return Json(prods);
         }
 
         [HttpPost]

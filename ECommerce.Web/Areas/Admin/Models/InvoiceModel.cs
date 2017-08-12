@@ -70,7 +70,7 @@ namespace ECommerce.Web.Areas.Admin.Models
                 var prods = _unit.InvoiceProductRepository.GetAll().ToList().Where(x => x.InvoiceID == model.InvoiceID).ToList();
                 foreach (var item in prods)
                 {
-                    if (model.InvoiceProductID.Any(x => x == item.ID))
+                    if (model.InvoiceProductID != null && model.InvoiceProductID.Count() > 0 && model.InvoiceProductID.Any(x => x == item.ID))
                     {
                         var index = Array.IndexOf(model.InvoiceProductID, item.ID);
                         item.Quantity = model.ProductQuantity[index];
@@ -81,10 +81,13 @@ namespace ECommerce.Web.Areas.Admin.Models
                     {
                         _unit.InvoiceProductRepository.Delete(item);
                     }
-                    _unit.Save();
                 }
+                var invoice = _unit.InvoiceRepository.GetById(model.InvoiceID);
+                invoice.Status = model.Status;
+                _unit.InvoiceRepository.Update(invoice);
+                _unit.Save();
             }
-            catch
+            catch (Exception ex)
             {
 
             }

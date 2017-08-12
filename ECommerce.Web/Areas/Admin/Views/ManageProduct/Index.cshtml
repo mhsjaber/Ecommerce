@@ -1,5 +1,7 @@
-﻿@model IEnumerable<ECommerce.Web.Areas.Admin.Models.ProductViewModel>
+﻿@using ECommerce.Web.Models
+@model IEnumerable<ECommerce.Web.Areas.Admin.Models.ProductViewModel>
 @{
+    var cats = CategoryList.GetAllCategory();
     ViewBag.Title = "Index";
     int count = 1;
 }
@@ -25,22 +27,22 @@
                                 <th style="width: 50px">Sl</th>
                                 <th>Name</th>
                                 <th>Number</th>
-                                <th>SubCategory </th>
-                                <th>Category</th>
+                                <th>Sub Category </th>
                                 <th>Units</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.OrderBy(x=> x.Name))
                             {
                                 <tr>
                                     <td>@(count++)</td>
                                     <td>@item.Name</td>
-                                    <td>ITM-@item.ItemNumber.ToString("0000")</td>
+                                    <td>P-@item.ItemNumber.ToString("000000")</td>
                                     <td>@item.SubCategoryName</td>
-                                    <td>@item.CategoryName</td>
                                     <td>@item.UnitAvailable</td>
+                                    <td>@item.Status</td>
                                     <td>
                                         <a href="/Admin/ManageProduct/Update/@item.ID">Edit</a> |
                                         <a href="javascript:void(0)" onclick="show_modal('@item.ID')">Delete</a>
@@ -87,12 +89,25 @@
             <form method="post" action="/Admin/ManageProduct/StoreItem">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="email">Product Name:</label>
-                        <select  class="form-control" name="ID">
-                            @foreach (var item in Model)
+                        <label for="email">Select Category:</label>
+                        <select class="form-control" id="catid" onchange="load_category(this)">
+                            <option value="">-- Select category --</option>
+                            @foreach (var item in cats)
                             {
-                                <option value="@item.ID">@item.Name</option>
+                                <option value="@item.CategoryID">@item.CategoryName</option>
                             }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Select Sub Category:</label>
+                        <select class="form-control" id="subcatid" onchange="load_product(this)">
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Select Product:</label>
+                        <select class="form-control" id="product" name="ID" required>
+                           
                         </select>
                     </div>
                     <div class="form-group">
@@ -113,6 +128,51 @@
         function show_modal(id) {
             $('#prod_id').val(id);
             $('#deleteModal').modal('show');
+        }
+
+        function load_category(select) {
+            var catID = select.value;
+            if (catID != '') {
+                $.ajax({
+                    url: "/Admin/ManageProduct/GetSubCategory",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { CategoryID: catID },
+                    success: function (result) {
+                        $('#subcatid').html('<option value="">-- Select Sub Category --</option>');
+                        $.each(result, function (index, value) {
+                            var option = '<option value="' + value.SubCategoryID + '">' + value.SubCategoryName + '</option>';
+                            $('#subcatid').append(option);
+                        });
+                    }
+                });
+            }
+            else {
+                $('#subcatid').html('');
+                $('#product').html('');
+            }
+        }
+
+        function load_product(select) {
+            var subcatID = select.value;
+            if (subcatID != '') {
+                $.ajax({
+                    url: "/Admin/ManageProduct/GetProducts",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { SubCategoryID: subcatID },
+                    success: function (result) {
+                        $('#product').html('<option value="">-- Select Product --</option>');
+                        $.each(result, function (index, value) {
+                            var option = '<option value="' + value.ID + '">' + value.Name + '</option>';
+                            $('#product').append(option);
+                        });
+                    }
+                });
+            }
+            else {
+                $('#product').html('');
+            }
         }
     </script>
 }

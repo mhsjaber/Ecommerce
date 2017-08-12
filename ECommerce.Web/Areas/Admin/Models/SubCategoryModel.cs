@@ -66,7 +66,7 @@ namespace ECommerce.Web.Areas.Admin.Models
 
         public void UpdateSubCategory(SubCategoryViewModel model)
         {
-            var subCategory = _unit.ProductSubCategoryRepository.GetById(model.CategoryID);
+            var subCategory = _unit.ProductSubCategoryRepository.GetById(model.SubCategoryID);
             subCategory.Name = model.SubCategoryName;
             subCategory.CategoryID = model.CategoryID;
             _unit.ProductSubCategoryRepository.Update(subCategory);

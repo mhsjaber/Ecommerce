@@ -22,6 +22,7 @@ namespace ECommerce.Web.Areas.Admin.Models
         public int Price { get; set; }
         public int UnitAvailable { get; set; }
         public string Image { get; set; }
+        public ProductStatus Status { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
         public List<ProductSubCategory> SubCategory { get; set; }
     }
@@ -45,11 +46,13 @@ namespace ECommerce.Web.Areas.Admin.Models
                 var subCategory = smodel.GetDetails(product.SubCategoryID);
                 var obj = new ProductViewModel();
                 obj.Name = product.Name;
+                obj.SubCategoryID = product.SubCategoryID;
                 obj.SubCategoryName = subCategory.SubCategoryName;
                 obj.CategoryName = subCategory.CategoryName;
                 obj.ItemNumber = product.ItemNumber;
                 obj.UnitAvailable = product.UnitAvailable;
                 obj.ID = product.ID;
+                obj.Status = product.Status;
                 list.Add(obj);
             }
             return list;
@@ -68,6 +71,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             model.Price = product.Price;
             model.CategoryID = _unit.ProductSubCategoryRepository.GetById(product.SubCategoryID).CategoryID;
             model.SubCategory = _unit.ProductSubCategoryRepository.GetAll().ToList().Where(x => x.CategoryID == model.CategoryID).ToList();
+            model.Status = product.Status;
             return model;
         }
 
@@ -87,6 +91,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             product.Name = model.Name;
             product.Price = model.Price;
             product.Image = model.Image;
+            product.Status = model.Status;
             product.SubCategoryID = model.SubCategoryID;
             _unit.ProductRepository.Add(product);
             _unit.Save();
@@ -100,6 +105,7 @@ namespace ECommerce.Web.Areas.Admin.Models
             product.Name = model.Name;
             product.Price = model.Price;
             product.Image = model.Image;
+            product.Status = model.Status;
             product.SubCategoryID = model.SubCategoryID;
             _unit.ProductRepository.Update(product);
             _unit.Save();

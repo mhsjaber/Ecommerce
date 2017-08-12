@@ -15,5 +15,18 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             var model = _unit.MessageRepository.GetAll();
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            try
+            {
+                var msg = _unit.MessageRepository.GetById(id);
+                _unit.MessageRepository.Delete(msg);
+                _unit.Save();
+            }
+            catch { }
+            return RedirectToAction("Index");
+        }
     }
 }

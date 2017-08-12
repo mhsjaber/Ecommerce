@@ -33,11 +33,11 @@
                             {
                                 <tr>
                                     <td>@(count++)</td>
-                                    <td>INV-@item.Number.ToString("0000")</td>
+                                    <td>I-@item.Number.ToString("000000")</td>
                                     <td>
                                         @if (item.CustomerID.HasValue)
                                         {
-                                        <a href="/admin/managemember/details/@item.CustomerID">@item.CustomerName</a>
+                                        <a href="/admin/managemember/Update/@item.CustomerID">@item.CustomerName</a>
                                         }
                                     </td>
                                     <td>@item.Status.ToString()</td>
