@@ -4,11 +4,15 @@
     var cats = CategoryList.GetAllCategory().OrderBy(x=> x.CategoryName);
 }
 
-<div class="col-sm-3">
+<div class="col-sm-3" style="margin-bottom: 40px;">
     <div class="left-sidebar">
         <h2>Category</h2>
         <div class="panel-group category-products" id="accordian">
-            <!--category-productsr-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a href="/Product/Index?size=@ViewBag.Size">All Products</a></h4>
+                </div>
+            </div>
         @foreach (var item in cats)
         {
             <div class="panel panel-default">
@@ -16,7 +20,7 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordian" href="#cat_@item.CategoryID">
                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                            @item.CategoryName
+                            <a href="/Product/Index?cat=@item.CategoryID&size=@ViewBag.Size">@item.CategoryName</a>
                         </a>
                     </h4>
                 </div>
@@ -26,7 +30,7 @@
 
                             @foreach (var sub in item.SubCategory)
                             {
-                                <li><a href="/Product/Index?sub=@sub.SubCategoryID">@sub.SubCategoryName</a></li>
+                                <li><a href="/Product/Index?sub=@sub.SubCategoryID&size=@ViewBag.Size">@sub.SubCategoryName</a></li>
                             }
                         </ul>
                     </div>

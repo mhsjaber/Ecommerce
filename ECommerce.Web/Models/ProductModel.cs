@@ -11,6 +11,10 @@ namespace ECommerce.Web.Models
         public List<Product> Products { get; set; }
         public int Index { get; set; } = 1;
         public int TotalPages { get; set; }
+        public Guid? SubCategory { get; set; }
+        public Guid? Category { get; set; }
+        public int PageSize { get; set; }
+        public string Url { get; internal set; }
     }
     public class ProductDetailsModel
     {

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using ECommerce.Web.Models
+@{ 
+    var cats = CategoryList.GetAllCategory().OrderBy(x => x.CategoryName).Take(5).ToList();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -17,6 +21,7 @@
     <script src="~/Content/js/html5shiv.js"></script>
     <script src="~/Content/js/respond.min.js"></script>
     <![endif]-->
+    <script src="~/Content/js/jquery.js"></script>
     <link rel="shortcut icon" href="~/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
@@ -216,11 +221,10 @@
                         <div class="single-widget">
                             <h2>Quock Shop</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="javascript:void(0)">T-Shirt</a></li>
-                                <li><a href="javascript:void(0)">Mens</a></li>
-                                <li><a href="javascript:void(0)">Womens</a></li>
-                                <li><a href="javascript:void(0)">Gift Cards</a></li>
-                                <li><a href="javascript:void(0)">Shoes</a></li>
+                                @foreach (var item in cats)
+                                {
+                                    <li><a href="/Product/Index?cat=@item.CategoryID&size=@ViewBag.Size">@item.CategoryName</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -262,7 +266,6 @@
     </footer><!--/Footer-->
 
 
-    <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
     <script src="~/Content/js/price-range.js"></script>
@@ -322,6 +325,7 @@
             $('#quantity-' + i).val(parseInt(quantity) + parseInt(c));
             CalculateCart()
         }
+
     </script>
 </body>
 </html>

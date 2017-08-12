@@ -36,15 +36,25 @@
                             <!--/product-information-->
                             <img src="~/Content/images/product-details/new.jpg" class="newarrival" alt="" />
                             <h2>@Model.Product.Name</h2>
-                            <p>Product No: @Model.Product.ItemNumber.ToString("0000000")</p>
+                            <p>Product No: P-@Model.Product.ItemNumber.ToString("0000000")</p>
                             <span>
                                 <span>US $@Model.Product.Price</span>
                                 <label>Quantity:</label>
                                 <input type="text" value="3" id="quantity"/>
-                                <button type="button" class="btn btn-fefault cart" onclick="preAddToCart('@Model.Product.ID')">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button>
+                                @if (Model.Product.UnitAvailable > 0)
+                                {
+                                    <button type="button" class="btn btn-fefault cart" onclick="preAddToCart('@Model.Product.ID')">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Add to cart
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger cart" style="background-color:indianred">
+                                        <i class="fa fa-times"></i>
+                                        Out of Stock
+                                    </button>
+                                }
                             </span>
                             <p><b>Availability:</b> 
                             @if (Model.Product.UnitAvailable > 0)
@@ -75,11 +85,11 @@
                             <div class="col-sm-12">
                                 <table class="table">
                                     <tr>
-                                        <th style="width:20%;">Item No:</th>
-                                        <td>@Model.Product.ItemNumber</td>
+                                        <th style="width:20%;">Product No:</th>
+                                        <td>P-@Model.Product.ItemNumber.ToString("0000000")</td>
                                     </tr>
                                     <tr>
-                                        <th>Name:</th>
+                                        <th>Product Name:</th>
                                         <td>@Model.Product.Name</td>
                                     </tr>
                                     <tr>

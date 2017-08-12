@@ -7,16 +7,48 @@
     int t = 0;
 }
 
+<style>
+    .sel {
+        max-width: 50px;
+        float: right;
+        font-size: 13px;
+        padding: 3px;
+        background-color: white;
+        border: 1px solid #eee;
+    }
+</style>
+
 <section>
     <div class="container">
         <div class="row">
             @Html.Partial("_Category")
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
-                    <h2 class="title text-center">All Products</h2>
-                    @foreach (var item in products)
+                    <h2 class="title text-center" style="margin-bottom: 0;">All Products</h2>
+                    <div class="col-sm-12">
+                        <select class="sel" onchange="ChangeSize(this)">
+                            @for (int i = 6; i <= 30; i += 6)
+                            {
+                                if (i == Model.PageSize)
+                                {
+                                    <option selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option>@i</option>
+                                }
+                            }
+                        </select>
+                        <span class="pull-right" style="height: 26px; margin-top: 4px; margin-right: 5px;">
+                            Page Size:
+                        </span>
+                    </div>
+                    <div class="clearfix"></div>
+                    @if (products != null && products.Count > 0)
                     {
-                        t++;
+                        foreach (var item in products)
+                        {
+                            t++;
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
@@ -31,13 +63,27 @@
                                         }
                                         <h2>$@item.Price</h2>
                                         <p>@item.Name</p>
+                                        @if (item.UnitAvailable > 0)
+                                        {
                                         <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                        }
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
                                             <h2>$@item.Price</h2>
                                             <p>@item.Name</p>
+                                            @if (item.UnitAvailable > 0)
+                                            {
                                             <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -48,10 +94,17 @@
                                 </div>
                             </div>
                         </div>
-                        if (t % 3 == 0)
-                        {
+                            if (t % 3 == 0)
+                            {
                             <div class="clearfix"></div>
+                            }
                         }
+                    }
+                    else
+                    {
+                        <div class="register-req">
+                            <p>Nothing to show for this type of products.</p>
+                        </div>
                     }
                     <div class="clearfix"></div>
                     <ul class="pagination">
@@ -63,7 +116,19 @@
                             }
                             else
                             {
-                                <li><a href="/Product/Index?index=@i">@i</a></li>
+                                if (Model.SubCategory != null)
+                                {
+                                    <li><a href="/Product/Index?index=@i&sub=@Model.SubCategory&size=@Model.PageSize">@i</a></li>
+                                }
+                                else if (Model.Category != null)
+                                {
+                                    <li><a href="/Product/Index?index=@i&cat=@Model.Category&size=@Model.PageSize">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/Product/Index?index=@i&size=@Model.PageSize">@i</a></li>
+                                }
+
                             }
                         }
                     </ul>
@@ -73,3 +138,24 @@
         </div>
     </div>
 </section>
+
+<input type="hidden" id="sub" value="@Model.SubCategory" />
+<input type="hidden" id="cat" value="@Model.Category" />
+
+<script>
+    function ChangeSize(select) {
+
+        var size = $(select).val();
+        var link = '/Product/Index?index=@Model.Index&size=' + size;
+        var cat = $('#cat').val();
+        var sub = $('#sub').val();
+
+        if (cat != '') {
+            link += '&cat=' + cat;
+        }
+        else if (sub != '') {
+            link += '&sub=' + sub;
+        }
+        window.location.replace(link);
+    }
+</script>
