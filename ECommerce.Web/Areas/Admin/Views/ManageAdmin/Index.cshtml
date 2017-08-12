@@ -1,0 +1,59 @@
+﻿@model ECommerce.Web.Areas.Admin.Models.AdminViewModel
+@{
+    ViewBag.Title = "Index";
+    int count = 1;
+    var list = Model.Admins;
+}
+
+<section class="content-header">
+    <h1>
+        Admins
+        <small>List of Admins</small>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Admin</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table id="table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px">Sl</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Create Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in list)
+                            {
+                                <tr>
+                                    <td>@(count++)</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Username</td>
+                                    <td>@item.CreatedOn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                    <td>
+                                        @if (!Model.CanEdit)
+                                        {
+                                            <a href="/Admin/ManageAdmin/Edit/@item.ID">Edit</a> <span>|</span>
+                                            <a href="javascript:void(0)" onclick="show_modal('@item.ID')">Delete</a>
+                                        }
+                                        else
+                                        {
+                                            <span>Restricted</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

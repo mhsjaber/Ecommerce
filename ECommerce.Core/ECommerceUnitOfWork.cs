@@ -136,6 +136,19 @@ namespace ECommerce.Core
             }
         }
 
+        private IGenericRepository<Admin> adminRepository;
+        public IGenericRepository<Admin> AdminRepository
+        {
+            get
+            {
+                if (adminRepository == null)
+                {
+                    adminRepository = new GenericRepository<Admin>(_context);
+                }
+                return adminRepository;
+            }
+        }
+
         public void Save()
         {
             _context.SaveChanges();
