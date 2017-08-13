@@ -27,6 +27,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             if (user != null)
             {
                 Session["Admin"] = model.Username;
+                Session["AdminType"] = user.Type.ToString();
                 return RedirectToAction("Index", "Dashboard");
             }
             return View();

@@ -25,20 +25,31 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             return View(model);
         }
 
+
+        public ActionResult EditProfile()
+        {
+            var model = _unit.AdminRepository.GetAll().ToList().Where(x=> x.Username == Session["Admin"].ToString()).FirstOrDefault();
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult Edit(Core.Member.Admin model)
         {
             var admin = _unit.AdminRepository.GetById(model.ID);
+            if (Session["AdminType"].ToString() != "SuperAdmin" && Session["Admin"].ToString() != admin.Username)
+                return RedirectToAction("Index");
+
             admin.Name = model.Name;
-            admin.Password = model.Password;
-            admin.Type = model.Type;
+            if(admin.Type == Core.Member.AdminType.SuperAdmin)
+                admin.Type = model.Type;
             admin.Username = model.Username;
+            Session["Admin"] = model.Username;
             _unit.AdminRepository.Update(admin);
             _unit.Save();
             return RedirectToAction("Index");
         }
 
-        public ActionResult Create(Guid id)
+        public ActionResult Create()
         {
             return View();
         }
@@ -51,6 +62,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             admin.Password = model.Password;
             admin.Type = model.Type;
             admin.Username = model.Username;
+            admin.CreatedOn = DateTime.Now;
             _unit.AdminRepository.Add(admin);
             _unit.Save();
             return RedirectToAction("Index");
@@ -61,14 +73,11 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         {
             try
             {
-                if (Session["Admin"] == null)
-                    return RedirectToAction("Index", "Home", new { area = ""});
-
                 var admin = _unit.AdminRepository.GetAll().ToList().Where(x => x.Username == Session["Admin"].ToString()).FirstOrDefault();
                 if (model.NewPassword == model.RePassword && model.OldPassword == admin.Password)
                 {
                     admin.Password = model.RePassword;
-                    _unit.AdminRepository.Add(admin);
+                    _unit.AdminRepository.Update(admin);
                     _unit.Save();
                     return RedirectToAction("Index");
                 }
@@ -76,13 +85,19 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             }
             catch
             {
-                return RedirectToAction("Index", "Home", "");
+                return RedirectToAction("Index");
             }
         }
 
         public ActionResult ChangePassword()
         {
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session["Admin"] = null;
+            return RedirectToAction("Index", "AdminLogin");
         }
     }
 }

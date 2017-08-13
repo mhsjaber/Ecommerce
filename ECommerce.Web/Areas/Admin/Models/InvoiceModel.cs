@@ -22,6 +22,7 @@ namespace ECommerce.Web.Areas.Admin.Models
         public int[] ProductQuantity { get; set; }
         public double[] ProductDiscount { get; set; }
         public Guid[] InvoiceProductID { get; set; }
+        public BillingAddress BillingAddress { get; set; }
     }
 
     public class InvoiceProductViewModel
@@ -111,6 +112,8 @@ namespace ECommerce.Web.Areas.Admin.Models
                 model.CreatedOn = invoice.CreatedOn;
                 model.Number = invoice.Number;
                 model.Status = invoice.Status;
+                if (invoice.BillingAddressID.HasValue)
+                    model.BillingAddress = _unit.BillingAddressRepository.GetById(invoice.BillingAddressID.Value);
                 var prods = new List<InvoiceProductViewModel>();
                 var prObj = new ProductModel();
                 foreach (var item in dets)

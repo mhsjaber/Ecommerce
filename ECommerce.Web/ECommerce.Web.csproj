@@ -151,7 +151,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageMemberController.cs" />
@@ -3087,6 +3086,9 @@
     <Content Include="Content\Admin\vendors\fullcalendar\CHANGELOG.md" />
     <Content Include="Content\Admin\vendors\fullcalendar\CONTRIBUTING.md" />
     <Content Include="Content\Admin\vendors\fullcalendar\README.md" />
+    <Content Include="Areas\Admin\Views\ManageAdmin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageAdmin\EditProfile.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
