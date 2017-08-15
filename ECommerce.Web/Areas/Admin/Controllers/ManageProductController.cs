@@ -136,7 +136,6 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 Session["Notify"] = "Failed to store product.";
                 Session["Type"] = "error";
             }
-
             return RedirectToAction("Index");
         }
     }
