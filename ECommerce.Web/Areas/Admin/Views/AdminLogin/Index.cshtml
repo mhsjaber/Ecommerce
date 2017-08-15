@@ -63,6 +63,17 @@
             </div>
         </div>
     </div>
+
+    <script src="~/Content/Admin/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
+    @if (System.Web.HttpContext.Current.Session["Notify"] != null && System.Web.HttpContext.Current.Session["Type"] != null)
+    {
+        <script>
+            $.notify('@System.Web.HttpContext.Current.Session["Notify"]', '@System.Web.HttpContext.Current.Session["Type"]')
+        </script>
+        System.Web.HttpContext.Current.Session["Notify"] = null;
+        System.Web.HttpContext.Current.Session["Type"] = null;
+    }
 </body>
 </html>
 

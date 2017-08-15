@@ -35,37 +35,67 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Core.Member.Admin model)
         {
-            var admin = _unit.AdminRepository.GetById(model.ID);
-            if (Session["AdminType"].ToString() != "SuperAdmin" && Session["Admin"].ToString() != admin.Username)
-                return RedirectToAction("Index");
-
-            admin.Name = model.Name;
-            if(admin.Type == Core.Member.AdminType.SuperAdmin)
-                admin.Type = model.Type;
-            admin.Username = model.Username;
-            Session["Admin"] = model.Username;
-            _unit.AdminRepository.Update(admin);
-            _unit.Save();
+            try
+            {
+                var admin = _unit.AdminRepository.GetById(model.ID);
+                if (Session["AdminType"].ToString() != "SuperAdmin" && Session["Admin"].ToString() != admin.Username)
+                {
+                    Session["Notify"] = "You don't have permission to edit profile.";
+                    Session["Type"] = "error";
+                    return RedirectToAction("Index");
+                }
+                admin.Name = model.Name;
+                if (admin.Type == Core.Member.AdminType.SuperAdmin)
+                    admin.Type = model.Type;
+                admin.Username = model.Username;
+                Session["Admin"] = model.Username;
+                _unit.AdminRepository.Update(admin);
+                _unit.Save();
+                Session["Notify"] = "Profile update successfully.";
+                Session["Type"] = "success";
+            }
+            catch (Exception ex)
+            {
+                Session["Notify"] = "Error in profile update.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         public ActionResult Create()
         {
+            if (Session["AdminType"].ToString() != "SuperAdmin")
+            {
+                Session["Notify"] = "You cannot create an admin..";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Core.Member.Admin model)
         {
-            var admin = new Core.Member.Admin();
-            admin.Name = model.Name;
-            admin.Password = model.Password;
-            admin.Type = model.Type;
-            admin.Username = model.Username;
-            admin.CreatedOn = DateTime.Now;
-            _unit.AdminRepository.Add(admin);
-            _unit.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                var admin = new Core.Member.Admin();
+                admin.Name = model.Name;
+                admin.Password = model.Password;
+                admin.Type = model.Type;
+                admin.Username = model.Username;
+                admin.CreatedOn = DateTime.Now;
+                _unit.AdminRepository.Add(admin);
+                _unit.Save();
+                Session["Notify"] = "Admin created successfully.";
+                Session["Type"] = "success";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Session["Notify"] = "Error in admin create.";
+                Session["Type"] = "error";
+                return RedirectToAction("Create");
+            }
         }
 
         [HttpPost]
@@ -79,7 +109,19 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                     admin.Password = model.RePassword;
                     _unit.AdminRepository.Update(admin);
                     _unit.Save();
+                    Session["Notify"] = "Password changed successfully";
+                    Session["Type"] = "success";
                     return RedirectToAction("Index");
+                }
+                else if (model.NewPassword != model.RePassword)
+                {
+                    Session["Notify"] = "New password & confirm password not matching.";
+                    Session["Type"] = "error";
+                }
+                else if (model.OldPassword != admin.Password)
+                {
+                    Session["Notify"] = "Old password not matching.";
+                    Session["Type"] = "error";
                 }
                 return RedirectToAction("ChangePassword");
             }
@@ -97,6 +139,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             Session["Admin"] = null;
+            Session["AdminType"] = null;
             return RedirectToAction("Index", "AdminLogin");
         }
     }

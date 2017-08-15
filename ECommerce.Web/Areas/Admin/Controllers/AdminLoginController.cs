@@ -30,7 +30,9 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 Session["AdminType"] = user.Type.ToString();
                 return RedirectToAction("Index", "Dashboard");
             }
-            return View();
+            Session["Notify"] = "Username and password not matching.";
+            Session["Type"] = "error";
+            return RedirectToAction("Index");
         }
     }
 }
