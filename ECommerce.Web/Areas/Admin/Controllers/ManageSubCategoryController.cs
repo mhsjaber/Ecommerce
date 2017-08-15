@@ -37,15 +37,34 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(SubCategoryViewModel model)
         {
-            subCategoryModel.CreateSubCategory(model);
+            try
+            {
+                subCategoryModel.CreateSubCategory(model);
+                Session["Notify"] = "Sub category added successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to add sub category.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         public ActionResult Update(Guid id)
         {
-            var model = subCategoryModel.GetDetails(id);
-            model.Category = categoryModel.GetCategories();
-            return View(model);
+            try
+            {
+                var model = subCategoryModel.GetDetails(id);
+                model.Category = categoryModel.GetCategories();
+                return View(model);
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to load sub category.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
