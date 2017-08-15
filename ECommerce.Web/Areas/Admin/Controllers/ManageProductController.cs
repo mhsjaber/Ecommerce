@@ -138,5 +138,37 @@ namespace ECommerce.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult RemoveFeature(Guid id)
+        {
+            try
+            {
+                productModel.AddToFeature(id);
+                Session["Notify"] = "Successfully removed from featured product.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to remove from featured product.";
+                Session["Type"] = "error";
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AddFeature(Guid id)
+        {
+            try
+            {
+                productModel.AddToFeature(id);
+                Session["Notify"] = "Successfully saved as featured product.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to save as featured product.";
+                Session["Type"] = "error";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -29,6 +29,7 @@
                                 <th>Number</th>
                                 <th>Sub Category </th>
                                 <th>Units</th>
+                                <th>Featured</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -42,6 +43,16 @@
                                     <td>P-@item.ItemNumber.ToString("000000")</td>
                                     <td>@item.SubCategoryName</td>
                                     <td>@item.UnitAvailable</td>
+                                    <td>
+                                        @if (item.IsFeatured)
+                                        {
+                                            <a href="/admin/manageproduct/removefeature/@item.ID" class="text-success"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/admin/manageproduct/addfeature/@item.ID" class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        }
+                                    </td>
                                     <td>@item.Status</td>
                                     <td>
                                         <a href="/Admin/ManageProduct/Update/@item.ID">Edit</a> |

@@ -25,14 +25,32 @@ namespace ECommerce.Web.Areas.Admin.Models
         public ProductStatus Status { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
         public List<ProductSubCategory> SubCategory { get; set; }
+        public bool IsFeatured { get; set; }
+    }
+
+    public class FeatureModel
+    {
+        private ECommerceUnitOfWork _unit;
+        public FeatureModel()
+        {
+            _unit = new ECommerceUnitOfWork(new ECommerceContext());
+        }
+
+        public bool IsFeatured(Guid iD)
+        {
+            var prod = _unit.FeaturedProductRepository.GetAll().ToList().Where(x => x.ProductID == iD).FirstOrDefault();
+            return prod != null;
+        }
     }
 
     public class ProductModel
     {
         private ECommerceUnitOfWork _unit;
+        private FeatureModel feature;
         public ProductModel()
         {
             _unit = new ECommerceUnitOfWork(new ECommerceContext());
+            feature = new FeatureModel();
         }
 
         public List<ProductViewModel> Get()
@@ -53,6 +71,7 @@ namespace ECommerce.Web.Areas.Admin.Models
                 obj.UnitAvailable = product.UnitAvailable;
                 obj.ID = product.ID;
                 obj.Status = product.Status;
+                obj.IsFeatured = feature.IsFeatured(product.ID);
                 list.Add(obj);
             }
             return list;
@@ -109,6 +128,29 @@ namespace ECommerce.Web.Areas.Admin.Models
             product.SubCategoryID = model.SubCategoryID;
             _unit.ProductRepository.Update(product);
             _unit.Save();
+        }
+
+        public void AddToFeature(Guid id)
+        {
+            var prod = _unit.FeaturedProductRepository.GetAll().ToList().Where(x => x.ProductID == id).FirstOrDefault();
+            if (prod == null)
+            {
+                _unit.FeaturedProductRepository.Add(new FeaturedProduct()
+                {
+                    ProductID = id
+                });
+                _unit.Save();
+            }
+        }
+
+        public void RemoveFromFeature(Guid id)
+        {
+            var prod = _unit.FeaturedProductRepository.GetAll().ToList().Where(x => x.ProductID == id).FirstOrDefault();
+            if (prod != null)
+            {
+                _unit.FeaturedProductRepository.Delete(prod);
+                _unit.Save();
+            }
         }
 
         public void Delete(Guid productID)
