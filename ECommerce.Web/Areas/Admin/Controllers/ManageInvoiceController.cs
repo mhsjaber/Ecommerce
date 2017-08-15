@@ -48,6 +48,10 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         public ActionResult Update(Guid id)
         {
             var model = invoiceModel.GetDetails(id);
+            if (model.Status == Core.CustomerInvoice.InvoiceStatus.Delivered)
+            {
+                return RedirectToAction("Index");
+            }
             return View(model);
         }
 
