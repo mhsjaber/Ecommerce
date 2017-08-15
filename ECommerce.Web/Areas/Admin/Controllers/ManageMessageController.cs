@@ -26,8 +26,14 @@ namespace ECommerce.Web.Areas.Admin.Controllers
                 var msg = _unit.MessageRepository.GetById(id);
                 _unit.MessageRepository.Delete(msg);
                 _unit.Save();
+                Session["Notify"] = "Message deleted successfully.";
+                Session["Type"] = "success";
             }
-            catch { }
+            catch
+            {
+                Session["Notify"] = "Failed to delete message";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
     }

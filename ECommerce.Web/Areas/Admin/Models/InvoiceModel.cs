@@ -93,6 +93,8 @@ namespace ECommerce.Web.Areas.Admin.Models
                     {
                         _unit.InvoiceProductRepository.Delete(item);
                     }
+                    HttpContext.Current.Session["Notify"] = "Invoice updated successfully.";
+                    HttpContext.Current.Session["Type"] = "success";
                 }
                 invoice.Status = model.Status;
                 _unit.InvoiceRepository.Update(invoice);
@@ -100,7 +102,8 @@ namespace ECommerce.Web.Areas.Admin.Models
             }
             catch (Exception ex)
             {
-
+                HttpContext.Current.Session["Notify"] = "Failed to update invoice.";
+                HttpContext.Current.Session["Type"] = "error";
             }
         }
 

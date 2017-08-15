@@ -30,42 +30,81 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
+            try
             {
-                var filename = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
-                var path = Path.Combine(Server.MapPath("~/Uploads/img/product/" + filename));
-                model.ImageFile.SaveAs(path);
-                model.Image = filename;
+                if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
+                {
+                    var filename = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads/img/product/" + filename));
+                    model.ImageFile.SaveAs(path);
+                    model.Image = filename;
+                }
+                productModel.Create(model);
+                Session["Notify"] = "Product created successfully.";
+                Session["Type"] = "success";
             }
-            productModel.Create(model);
+            catch
+            {
+                Session["Notify"] = "Failed to create product.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         public ActionResult Update(Guid id)
         {
-            var model = productModel.GetDetails(id);
-            model.Category = categoryModel.GetCategories();
-            return View(model);
+            try
+            {
+                var model = productModel.GetDetails(id);
+                model.Category = categoryModel.GetCategories();
+                return View(model);
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to load product.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public ActionResult Update(ProductViewModel model)
         {
-            if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
+            try
             {
-                var filename = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
-                var path = Path.Combine(Server.MapPath("~/Uploads/img/product/" + filename));
-                model.ImageFile.SaveAs(path);
-                model.Image = filename;
+                if (model.ImageFile != null && model.ImageFile.ContentLength > 0)
+                {
+                    var filename = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads/img/product/" + filename));
+                    model.ImageFile.SaveAs(path);
+                    model.Image = filename;
+                }
+                productModel.Update(model);
+                Session["Notify"] = "Product updated successfully.";
+                Session["Type"] = "success";
             }
-            productModel.Update(model);
+            catch
+            {
+                Session["Notify"] = "Failed to update product.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Delete(Guid ID)
         {
-            productModel.Delete(ID);
+            try
+            {
+                productModel.Delete(ID);
+                Session["Notify"] = "Product deleted successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to delete product.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
@@ -86,7 +125,18 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult StoreItem(ProductViewModel model)
         {
-            productModel.StoreItem(model);
+            try
+            {
+                productModel.StoreItem(model);
+                Session["Notify"] = "Product stored successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to store product.";
+                Session["Type"] = "error";
+            }
+
             return RedirectToAction("Index");
         }
     }

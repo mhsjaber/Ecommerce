@@ -41,18 +41,36 @@ namespace ECommerce.Web.Areas.Admin.Controllers
 
         public ActionResult Details(Guid id)
         {
-            var model = invoiceModel.GetDetails(id);
-            return View(model);
+            try
+            {
+                var model = invoiceModel.GetDetails(id);
+                return View(model);
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to load invoide details.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Update(Guid id)
         {
-            var model = invoiceModel.GetDetails(id);
-            if (model.Status == Core.CustomerInvoice.InvoiceStatus.Delivered)
+            try
+            { 
+                var model = invoiceModel.GetDetails(id);
+                if (model.Status == Core.CustomerInvoice.InvoiceStatus.Delivered)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(model);
+            }
+            catch
             {
+                Session["Notify"] = "Failed to load invoide details.";
+                Session["Type"] = "error";
                 return RedirectToAction("Index");
             }
-            return View(model);
         }
 
         [HttpPost]

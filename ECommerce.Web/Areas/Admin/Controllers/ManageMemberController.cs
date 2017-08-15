@@ -26,21 +26,50 @@ namespace ECommerce.Web.Areas.Admin.Controllers
 
         public ActionResult Update(Guid id)
         {
-            var model = memberModel.GetDetails(id);
-            return View(model);
+            try
+            {
+                var model = memberModel.GetDetails(id);
+                return View(model);
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to load mumber details.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public ActionResult Update(MemberViewModel model)
         {
-            memberModel.Update(model);
+            try
+            {
+                memberModel.Update(model);
+                Session["Notify"] = "Member updated successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+               Session["Notify"] = "Failed to update member.";
+               Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Delete(Guid id)
         {
-            memberModel.Delete(id);
+            try
+            {
+                memberModel.Delete(id);
+                Session["Notify"] = "Member deleted successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to update member.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
     }

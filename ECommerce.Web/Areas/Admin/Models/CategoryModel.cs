@@ -49,31 +49,61 @@ namespace ECommerce.Web.Areas.Admin.Models
 
         public void CreateCategory(CategoryViewModel model)
         {
-            var category = new ProductCategory();
-            category.Name = model.CategoryName;
-            _unit.ProductCategoryRepository.Add(category);
-            _unit.Save();
+            try
+            {
+                var category = new ProductCategory();
+                category.Name = model.CategoryName;
+                _unit.ProductCategoryRepository.Add(category);
+                _unit.Save();
+                HttpContext.Current.Session["Notify"] = "Category created successfully.";
+                HttpContext.Current.Session["Type"] = "success";
+            }
+            catch
+            {
+                HttpContext.Current.Session["Notify"] = "Error in category create.";
+                HttpContext.Current.Session["Type"] = "error";
+            }
         }
 
         public void UpdateCategory(CategoryViewModel model)
         {
-            var category = _unit.ProductCategoryRepository.GetById(model.CategoryID);
-            category.Name = model.CategoryName;
-            _unit.ProductCategoryRepository.Update(category);
-            _unit.Save();
+            try
+            {
+                var category = _unit.ProductCategoryRepository.GetById(model.CategoryID);
+                category.Name = model.CategoryName;
+                _unit.ProductCategoryRepository.Update(category);
+                _unit.Save();
+                HttpContext.Current.Session["Notify"] = "Category updated successfully.";
+                HttpContext.Current.Session["Type"] = "success";
+            }
+            catch
+            {
+                HttpContext.Current.Session["Notify"] = "Error in category update.";
+                HttpContext.Current.Session["Type"] = "error";
+            }
         }
 
         public void DeleteCategory(Guid categoryID)
         {
-            var category = _unit.ProductCategoryRepository.GetById(categoryID);
-            var subCategories = _unit.ProductSubCategoryRepository.GetAll().Where(x => x.CategoryID == categoryID).ToList();
-            foreach (var sub in subCategories)
+            try
             {
-                _unit.ProductSubCategoryRepository.Delete(sub);
+                var category = _unit.ProductCategoryRepository.GetById(categoryID);
+                var subCategories = _unit.ProductSubCategoryRepository.GetAll().Where(x => x.CategoryID == categoryID).ToList();
+                foreach (var sub in subCategories)
+                {
+                    _unit.ProductSubCategoryRepository.Delete(sub);
+                    _unit.Save();
+                }
+                _unit.ProductCategoryRepository.Delete(category);
                 _unit.Save();
+                HttpContext.Current.Session["Notify"] = "Category deleted successfully.";
+                HttpContext.Current.Session["Type"] = "success";
             }
-            _unit.ProductCategoryRepository.Delete(category);
-            _unit.Save();
+            catch
+            {
+                HttpContext.Current.Session["Notify"] = "Error in category delete.";
+                HttpContext.Current.Session["Type"] = "error";
+            }
         }
     }
 }

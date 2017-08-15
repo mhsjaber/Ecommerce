@@ -20,9 +20,18 @@ namespace ECommerce.Web.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            var model = new SubCategoryViewModel();
-            model.Category = categoryModel.GetCategories();
-            return View(model);
+            try
+            {
+                var model = new SubCategoryViewModel();
+                model.Category = categoryModel.GetCategories();
+                return View(model);
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to load sub category.";
+                Session["Type"] = "error";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
