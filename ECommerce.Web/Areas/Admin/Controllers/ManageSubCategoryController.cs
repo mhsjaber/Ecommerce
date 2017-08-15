@@ -70,14 +70,34 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Update(SubCategoryViewModel model)
         {
-            subCategoryModel.UpdateSubCategory(model);
+            try
+            {
+                subCategoryModel.UpdateSubCategory(model);
+                Session["Notify"] = "Sub category updated successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to update sub category.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Delete(Guid SubCategoryID)
         {
-            subCategoryModel.DeleteSubCategory(SubCategoryID);
+            try
+            {
+                subCategoryModel.DeleteSubCategory(SubCategoryID);
+                Session["Notify"] = "Sub category delete successfully.";
+                Session["Type"] = "success";
+            }
+            catch
+            {
+                Session["Notify"] = "Failed to delete sub category.";
+                Session["Type"] = "error";
+            }
             return RedirectToAction("Index");
         }
     }
