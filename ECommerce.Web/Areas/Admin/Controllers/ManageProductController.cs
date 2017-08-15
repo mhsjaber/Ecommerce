@@ -143,7 +143,7 @@ namespace ECommerce.Web.Areas.Admin.Controllers
         {
             try
             {
-                productModel.AddToFeature(id);
+                productModel.RemoveFromFeature(id);
                 Session["Notify"] = "Successfully removed from featured product.";
                 Session["Type"] = "success";
             }
