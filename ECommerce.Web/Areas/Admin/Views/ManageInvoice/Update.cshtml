@@ -176,10 +176,8 @@
         var discount = $('#dsc-' + id).val();
         var price = $('#prc-' + id).val();
         var quantity = $('#qnt-' + id).val();
-
         var total = (price * quantity) - discount;
         $('#total-' + id).val(total);
-
         calculate_total();
     }
 
