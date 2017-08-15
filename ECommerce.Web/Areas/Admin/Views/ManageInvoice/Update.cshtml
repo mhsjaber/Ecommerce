@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Details";
     int count = 1;
+    var enable = true;
 }
 <section class="content-header">
     <h1>
@@ -81,23 +82,36 @@
                                         <tr>
                                             <th>Sl.</th>
                                             <th>Product</th>
-                                            <th>Price</th>
-                                            <th style="width: 110px">Quantity</th>
-                                            <th style="width: 120px">Discount</th>
-                                            <th style="width: 120px">Total</th>
+                                            <th class="text-right">Price</th>
+                                            <th class="text-right" style="width: 90px">Quantity</th>
+                                            <th class="text-right" style="width: 80px">Available</th>
+                                            <th class="text-right" style="width: 90px">Discount</th>
+                                            <th class="text-right" style="width: 90px">Total</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model.Products)
                                         {
-                                            <tr id="tr-@item.ID">
-                                                <td>@(count++.ToString("00"))</td>
+                                            string cls = "";
+                                            if (item.UnitAvailable < item.Quantity)
+                                            {
+                                                cls = "danger";
+                                                enable = false;
+                                            }
+                                            <tr id="tr-@item.ID" class="@cls">
+                                                <td>
+                                                <input type="hidden" value="@item.ID" class="ids" />
+                                                @(count++.ToString("00"))</td>
                                                 <td>@item.ProductName</td>
-                                                <td><input type="hidden" id="prc-@item.ID" value="@item.Price" />@item.Price</td>
-                                                <td><input name="ProductQuantity[]" value="@item.Quantity" class="form-control" type="number" id="qnt-@item.ID" onchange="calculate('@item.ID')" /></td>
-                                                <td><input name="ProductDiscount[]" value="@item.Disccount" class="form-control" type="number" id="dsc-@item.ID" onchange="calculate('@item.ID')" /></td>
-                                                <td><input value="@item.Total" id="total-@item.ID" readonly class="form-control total" /></td>
+                                                <td class="text-right"><input type="hidden" id="prc-@item.ID" value="@item.Price" />@item.Price</td>
+                                                <td><input name="ProductQuantity[]" value="@item.Quantity" class="form-control text-right" type="number" id="qnt-@item.ID" onchange="calculate('@item.ID')" /></td>
+                                                <td class="text-right">
+                                                    <input type="hidden" id="avl-@item.ID" value="@item.UnitAvailable" />
+                                                    @item.UnitAvailable
+                                                </td>
+                                                <td><input name="ProductDiscount[]" value="@item.Disccount" class="form-control text-right" type="number" id="dsc-@item.ID" onchange="calculate('@item.ID')" /></td>
+                                                <td><input value="@item.Total" id="total-@item.ID" readonly class="form-control total text-right" /></td>
                                                 <td>
                                                     <input name="InvoiceProductID[]" type="hidden" value="@item.ID" />
                                                     <a href="javascript:void(0)" onclick="show_aert('@item.ID')">Remove</a>
@@ -106,8 +120,15 @@
                                         }
                                     </tbody>
                                 </table>
-                                <div class="row" style="text-align: center">
-                                    <input type="submit" class="btn btn-primary" value="Update" />
+                                <div class="row" style="text-align: center; padding-top: 10px">
+                                    @if (enable)
+                                    {
+                                        <input type="submit" class="btn btn-primary" value="Update" id="submit"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="btn btn-primary" value="Update" disabled id="submit" />
+                                    }
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>
@@ -164,6 +185,21 @@
 
     function calculate_total() {
         var gTotal = 0;
+        var enbl = true;
+        $('.ids').each(function () {
+            var pid = $(this).val();
+            var avl = parseInt($('#avl-' + pid).val());
+            var qnt = parseInt($('#qnt-' + pid).val());
+            if (qnt > avl) {
+                enbl = false;
+                $('#tr-' + pid).addClass('danger');
+            }
+            else {
+                $('#tr-' + pid).removeClass('danger');
+            }
+            $('#submit').prop('disabled', !enbl)
+        });
+
         $(".total").each(function (index) {
             gTotal += parseInt($(this).val());
         });

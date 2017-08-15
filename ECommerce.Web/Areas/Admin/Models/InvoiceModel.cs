@@ -35,6 +35,7 @@ namespace ECommerce.Web.Areas.Admin.Models
         public double Disccount { get; set; }
         public double Price { get; set; }
         public double Total { get; set; }
+        public int UnitAvailable { get; internal set; }
     }
 
     public class InvoiceModel
@@ -68,12 +69,22 @@ namespace ECommerce.Web.Areas.Admin.Models
         {
             try
             {
+                var invoice = _unit.InvoiceRepository.GetById(model.InvoiceID);
                 var prods = _unit.InvoiceProductRepository.GetAll().ToList().Where(x => x.InvoiceID == model.InvoiceID).ToList();
                 foreach (var item in prods)
                 {
+                    var p = _unit.ProductRepository.GetById(item.ProductID);
+                    if (invoice.Status == InvoiceStatus.OnDelivery)
+                    {
+                        p.UnitAvailable += item.Quantity;
+                    }
                     if (model.InvoiceProductID != null && model.InvoiceProductID.Count() > 0 && model.InvoiceProductID.Any(x => x == item.ID))
                     {
                         var index = Array.IndexOf(model.InvoiceProductID, item.ID);
+                        if (model.Status == InvoiceStatus.Delivered || model.Status == InvoiceStatus.OnDelivery)
+                        {
+                            p.UnitAvailable -= model.ProductQuantity[index];
+                        }
                         item.Quantity = model.ProductQuantity[index];
                         item.Discount = model.ProductDiscount[index];
                         _unit.InvoiceProductRepository.Update(item);
@@ -83,7 +94,6 @@ namespace ECommerce.Web.Areas.Admin.Models
                         _unit.InvoiceProductRepository.Delete(item);
                     }
                 }
-                var invoice = _unit.InvoiceRepository.GetById(model.InvoiceID);
                 invoice.Status = model.Status;
                 _unit.InvoiceRepository.Update(invoice);
                 _unit.Save();
@@ -118,16 +128,24 @@ namespace ECommerce.Web.Areas.Admin.Models
                 var prObj = new ProductModel();
                 foreach (var item in dets)
                 {
+                    int x = 0;
+                    if (model.Status == InvoiceStatus.OnDelivery)
+                    {
+                        x = item.Quantity;
+                    }
+                    var p = _unit.ProductRepository.GetById(item.ProductID);
                     prods.Add(new InvoiceProductViewModel()
                     {
                         ProductName = prObj.GetDetails(item.ProductID).Name,
                         Quantity = item.Quantity,
+                        UnitAvailable = p.UnitAvailable + x,
                         Disccount = item.Discount,
                         Price = item.Price,
                         Total = (item.Price * item.Quantity) - item.Discount,
                         ID = item.ID
                     });
                 }
+
                 model.Products = prods;
                 return model;
             }

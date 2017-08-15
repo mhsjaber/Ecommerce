@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Home Page";
     ViewBag.Page = "home";
-    var products = Model.Products.Take(6);
-    var fproducts = Model.FeaturedProducts.Take(6);
+    var products = Model.Products.Where(x => x.UnitAvailable > 0).ToList().Take(6);
+    var fproducts = Model.FeaturedProducts.Where(x => x.UnitAvailable > 0).ToList().Take(6);
 
     int t = 0;
 }
@@ -94,13 +94,27 @@
                                         }
                                         <h2>$@item.Price</h2>
                                         <p>@item.Name</p>
+                                        @if (item.UnitAvailable > 0)
+                                        {
                                         <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        }
+                                        else
+                                        {
+                                        <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                        }   
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
                                             <h2>$@item.Price</h2>
                                             <p>@item.Name</p>
-                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            @if (item.UnitAvailable > 0)
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -138,13 +152,27 @@
                                         }
                                         <h2>$@item.Price</h2>
                                         <p>@item.Name</p>
-                                        <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        @if (item.UnitAvailable > 0)
+                                        {
+                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                        }
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
                                             <h2>$@item.Price</h2>
                                             <p>@item.Name</p>
-                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            @if (item.UnitAvailable > 0)
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-default add-to-cart" onclick="AddToCart( '1', '@item.ID')"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0)" class="btn btn-default add-to-cart" style="color: indianred"><i class="fa fa-times"></i>Out of Stock</a>
+                                            }
                                         </div>
                                     </div>
                                 </div>
